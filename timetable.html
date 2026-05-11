@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timetable</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #c1e314;
+        }
+        td:hover {
+            background-color: #ddd;
+            color:#c1e314
+        }
+    </style>
+</head>
+<body>
+    <h1>Timetable</h1>
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+        </tr>
+        <tr>
+            <td>10:10 - 11:00</td>
+            <td>PP</td>
+            <td>CGAVM</td>
+            <td>OOPU</td>
+            <td>CGAVM</td>
+             <td rowspan="2">OOPU</td>
+             <td rowspan="2">ABPS</td>
+        </tr>
+        <tr>
+            <td>11:00 - 11:50</td>
+            <td>OOPU</td>
+            <td>OS</td>
+            <td>WT-UI/UX</td>
+            <td>PP</td>
+        </tr>
+        <tr>
+            <td>11:50 - 12:20</td>
+            <td colspan="6">LUNCH BREAK</td>
+        </tr>
+        <tr>
+            <td>12:20 - 01:10</td>
+            <td>WT-UI/UX</td>
+             <td rowspan="2">WT-UI/UX</td>
+             <td>OOPU</td>
+             <td rowspan="2">PP</td>
+             <td rowspan="2">CGAVM</td>
+             <td>-</td>
+        </tr>
+         <tr>
+            <td>01:10 - 02:00</td>
+            <td>OS</td>
+            <td>CGAVM</td>
+             <td>-</td>
+        </tr>
+        <tr>
+            <td>02:00 - 02:10</td>
+            <td colspan="6"> BREAK</td>
+        </tr>
+         <tr>
+            <td>02:10 - 03:00</td>
+            <td>OS</td>
+            <td rowspan="2">OS</td>
+            <td rowspan="2">OOPU</td>
+            <td>WT-UI/UX</td>
+            <td>LIBRARY</td>
+             <td>-</td>
+        </tr>
+        <tr>
+            <td>03:00 - 03:50</td>
+            <td>IDT</td>
+            <td>LIBRARY</td>
+            <td>LIBRARY</td>
+             <td>-</td>
+        </tr>
+    </table>
+</body>
+</html>
