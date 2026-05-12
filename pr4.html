@@ -1,0 +1,149 @@
+<!-- Selectors -->
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+
+    <style>
+
+        /* Universal Selector */
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Element Selector */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #26ee79, #80eeb5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Class Selector */
+        .container {
+            background-color: white;
+            padding: 30px;
+            width: 450px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ID Selector */
+        #name {
+            background-color: #f9f9ff;
+        }
+
+        h2, label {
+            color: rgb(0, 139, 130);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            padding: 10px;
+            width: 100%;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: darkgreen;
+        }
+
+        /* Class Selector */
+        .linkedin-link {
+            display: block;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            color: blue;
+            text-decoration: none;
+        }
+
+        /* Hover Selector */
+        .linkedin-link:hover {
+            text-decoration: underline;
+            color: red;
+        }
+
+        /* Element Selector */
+        marquee {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <marquee behavior="scroll" direction="left">
+            Welcome to Registration Form
+        </marquee>
+
+        <h2>Registration Form</h2>
+
+        <form>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <a class="linkedin-link" href="https://www.linkedin.com/feed/">
+                Visit  my LinkedIn
+            </a>
+
+            <label for="contact">Contact No:</label>
+            <input type="tel" id="contact" name="contact" required>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4" required></textarea>
+
+            <label for="state">State:</label>
+           <select id="state" name="state" required>
+                <option value="">Select State</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Rajasthan">Rajasthan</option>
+            </select>
+
+            <br><br>
+
+            <input type="submit" value="Submit">
+
+        </form>
+    </div>
+
+</body>
+</html>

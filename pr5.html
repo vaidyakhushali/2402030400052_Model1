@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid and Flex Layout</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            background-color: #f2f2f2;
+            margin: 20px;
+        }
+
+        h2{
+            text-align: center;
+            color: darkblue;
+        }
+
+        /* GRID LAYOUT */
+
+        .grid-container{
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 20px;
+            background-color: rgb(136, 215, 45);
+            padding: 20px;
+            border: 2px solid black;
+            margin-bottom: 40px;
+        }
+
+        .grid-item{
+            background-color: rgb(99, 152, 237);
+            border: 2px solid black;
+            padding: 30px;
+            text-align: center;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        .grid-item:hover{
+            background-color: pink;
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+
+        /* FLEX LAYOUT */
+
+        .flex-container{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: orange;
+            padding: 20px;
+            border: 2px solid black;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .flex-item{
+            background-color: lightblue;
+            border: 2px solid black;
+            padding: 30px;
+            width: 120px;
+            text-align: center;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        .flex-item:hover{
+            background-color: lightgreen;
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+        .column-container{
+            display: flex;
+            flex-direction: column;
+            width: 250px;
+            margin: auto;
+            margin-top: 40px;
+            background-color: rgb(93, 229, 72);
+            padding: 20px;
+            border: 2px solid black;
+        }
+
+        .column-item{
+            background-color: rgb(19, 221, 232);
+            margin: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid black;
+            transition: 0.3s;
+        }
+
+        .column-item:hover{
+            background-color: rgb(224, 215, 43);
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>Grid Layout</h2>
+    <div class="grid-container">
+        <div class="grid-item">1</div>
+        <div class="grid-item">2</div>
+        <div class="grid-item">3</div>
+        <div class="grid-item">4</div>
+        <div class="grid-item">5</div>
+        <div class="grid-item">6</div>
+    </div>
+    <h2>Flex Column Layout</h2>
+    <div class="column-container">
+        <div class="column-item">1</div>
+        <div class="column-item">2</div>
+        <div class="column-item">3</div>
+        <div class="column-item">4</div>
+    </div>
+</body>
+</html>
