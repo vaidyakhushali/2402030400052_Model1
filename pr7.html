@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Box Layout</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(to right, #141e30, #243b55);
+            font-family: Arial, sans-serif;
+        }
+        header{
+            background: rgba(255,255,255,0.1);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 30px;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+        }
+        main{
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container{
+            width: 85%;
+            height: 75vh;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        .big-box{
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            border-radius: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 45px;
+            font-weight: bold;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            transition: 0.4s;
+        }
+        .right{
+            display: grid;
+            grid-template-rows: repeat(3,1fr);
+            gap: 20px;
+        }
+        .small-box{
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: 0.4s;
+        }
+        .box1{
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+        .box2{
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+        .box3{
+            background: linear-gradient(135deg, #fa709a, #fee140);
+        }
+        .big-box:hover,
+        .small-box:hover{
+            transform: translateY(-10px) scale(1.03);
+
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        footer{
+            background: rgba(255,255,255,0.1);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Creative Box Layout
+    </header>
+    <main>
+        <div class="container">
+            <div class="big-box">
+                Main Box
+            </div>
+            <div class="right">
+                <div class="small-box box1">
+                    Box 1
+                </div>
+                <div class="small-box box2">
+                    Box 2
+                </div>
+                <div class="small-box box3">
+                    Box 3
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+      Footer
+    </footer>
+</body>
+</html>
