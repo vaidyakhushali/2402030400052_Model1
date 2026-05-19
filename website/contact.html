@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Header and Footer</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    background:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+    font-size:35px;
+    font-weight:bold;
+    color:#d35400;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+nav a{
+    text-decoration:none;
+    color:#333;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#d35400;
+}
+
+/* CONTENT */
+
+.content{
+    height:80vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:40px;
+    background:#fff8f3;
+}
+
+/* FOOTER */
+
+footer{
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    header{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">Bakeyy</div>
+
+    <nav>
+
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="bakeware.html">Bakeware</a></li>
+            <li><a href="boxes.html">Boxes</a></li>
+            <li><a href="ingredients.html">Ingredients</a></li>
+            <li><a href="register.html">Register</a></li>
+
+        </ul>
+
+    </nav>
+
+</header>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+    Welcome To Bakeyy Website
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>© 2026 Bakeyy Clone Website</p>
+
+</footer>
+<script>
+
+// LOAD CART FROM STORAGE
+
+let cart =
+JSON.parse(localStorage.getItem("cart")) || [];
+
+// SAVE CART
+
+function saveCart(){
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+}
+
+// ADD TO CART
+
+function addToCart(name, price, image){
+
+    let item = {
+
+        name:name,
+        price:price,
+        image:image,
+        quantity:1
+
+    };
+
+    cart.push(item);
+
+    saveCart();
+
+    updateCartCount();
+
+    alert(name + " added to cart!");
+
+}
+
+// UPDATE CART COUNT
+
+function updateCartCount(){
+
+    let count = 0;
+
+    cart.forEach(item => {
+
+        count += item.quantity;
+
+    });
+
+    document.getElementById("cart-count")
+    .innerText = count > 0 ? count : "";
+
+}
+
+// LOAD COUNT ON PAGE OPEN
+
+updateCartCount();
+
+</script>
+</body>
+</html>

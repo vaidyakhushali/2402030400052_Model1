@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bake Bliss Registration Form</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/* BODY */
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:40px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #fff4e6,
+    #ffe0b2,
+    #ffd1a1
+    );
+}
+
+/* CONTAINER */
+
+.container{
+
+    width:100%;
+    max-width:1400px;
+
+    display:grid;
+    grid-template-columns:430px 1fr;
+
+    overflow:hidden;
+
+    border-radius:35px;
+
+    background:white;
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,0.12);
+}
+
+/* LEFT SIDE */
+
+.left{
+
+    position:relative;
+
+    padding:70px 50px;
+
+    color:white;
+
+    background:
+    linear-gradient(
+    135deg,
+    #ff7b00,
+    #ff9500,
+    #ffb347
+    );
+}
+
+/* LOGO */
+
+.logo{
+
+    font-size:50px;
+
+    font-weight:700;
+
+    margin-bottom:25px;
+}
+
+/* LEFT TEXT */
+
+.left h1{
+
+    font-size:48px;
+
+    line-height:1.2;
+
+    margin-bottom:25px;
+}
+
+.left p{
+
+    line-height:1.9;
+
+    color:#fff6eb;
+
+    margin-bottom:40px;
+}
+
+/* FEATURES */
+
+.feature{
+
+    margin-bottom:18px;
+
+    padding:16px 18px;
+
+    border-radius:18px;
+
+    background:
+    rgba(255,255,255,0.15);
+
+    transition:0.3s;
+}
+
+.feature:hover{
+
+    transform:translateX(8px);
+
+    background:
+    rgba(255,255,255,0.25);
+}
+
+/* RIGHT SIDE */
+
+.right{
+
+    padding:55px;
+}
+
+/* TITLE */
+
+.top-title{
+
+    margin-bottom:35px;
+}
+
+.top-title h2{
+
+    font-size:40px;
+
+    color:#ff7b00;
+
+    margin-bottom:10px;
+}
+
+.top-title p{
+
+    color:#777;
+}
+
+/* FORM GRID */
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
+}
+
+/* INPUT BOX */
+
+.input-box label{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    color:#444;
+
+    font-weight:600;
+}
+
+/* INPUTS */
+
+.input-box input,
+.input-box textarea,
+.input-box select{
+
+    width:100%;
+
+    padding:18px 20px;
+
+    border-radius:18px;
+
+    border:2px solid #f0f0f0;
+
+    background:#fff8f2;
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:0.35s;
+}
+
+/* FOCUS EFFECT */
+
+.input-box input:focus,
+.input-box textarea:focus,
+.input-box select:focus{
+
+    border-color:#ff7b00;
+
+    background:white;
+
+    box-shadow:
+    0 0 12px rgba(255,123,0,0.25);
+
+    transform:translateY(-3px);
+}
+
+/* TEXTAREA */
+
+.input-box textarea{
+
+    resize:none;
+
+    height:120px;
+}
+
+/* FULL WIDTH */
+
+.full{
+
+    grid-column:1/3;
+}
+
+/* PAYMENT */
+
+.payment-title{
+
+    font-size:28px;
+
+    color:#ff7b00;
+
+    margin-bottom:20px;
+}
+
+.payment-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+}
+
+/* PAYMENT CARD */
+
+.payment-card input{
+
+    display:none;
+}
+
+.payment-card label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:#fff8f2;
+
+    border:2px solid transparent;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:0.35s;
+}
+
+.payment-card label:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+    0 10px 20px rgba(255,123,0,0.12);
+}
+
+.payment-card input:checked + label{
+
+    border-color:#ff7b00;
+
+    background:#fff1e6;
+}
+
+/* BUTTON */
+
+.btn{
+
+    width:100%;
+
+    margin-top:35px;
+
+    padding:20px;
+
+    border:none;
+
+    border-radius:60px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #ff7b00,
+    #ff9500
+    );
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.35s;
+
+    box-shadow:
+    0 12px 25px rgba(255,123,0,0.25);
+}
+
+.btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 16px 35px rgba(255,123,0,0.35);
+}
+
+/* FOOT TEXT */
+
+.bottom-text{
+
+    text-align:center;
+
+    margin-top:18px;
+
+    color:#777;
+
+    font-size:14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+
+    .container{
+        grid-template-columns:1fr;
+    }
+
+    .left{
+        display:none;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:1/2;
+    }
+
+    .payment-grid{
+        grid-template-columns:1fr;
+    }
+
+    .right{
+        padding:35px 25px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LEFT -->
+
+    <div class="left">
+
+        <div class="logo">
+            Bake Bliss
+        </div>
+
+        <h1>
+            Premium
+            Checkout
+        </h1>
+
+        <p>
+            Complete your bakery order with our
+            modern and secure registration system.
+        </p>
+
+        <div class="feature">
+            🚚 Fast Delivery
+        </div>
+
+        <div class="feature">
+            💳 Secure Payments
+        </div>
+
+        <div class="feature">
+            🎂 Premium Bakeware
+        </div>
+
+        <div class="feature">
+            ⭐ Trusted by Bakers
+        </div>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="right">
+
+        <div class="top-title">
+
+            <h2>Registration Form</h2>
+
+            <p>
+                Fill your details to place order
+            </p>
+
+        </div>
+
+        <form id="registerForm">
+
+            <div class="form-grid">
+
+                <div class="input-box">
+
+                    <label>Full Name</label>
+
+                    <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter full name"
+                    required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>Email Address</label>
+
+                    <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter email"
+                    required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>Phone Number</label>
+
+                    <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter phone number"
+                    required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>City</label>
+
+                    <input
+                    type="text"
+                    placeholder="Enter city"
+                    required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>Pincode</label>
+
+                    <input
+                    type="number"
+                    placeholder="Enter pincode"
+                    required>
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>State</label>
+
+                    <select required>
+
+                        <option value="">
+                            Select State
+                        </option>
+
+                        <option>Gujarat</option>
+
+                        <option>Maharashtra</option>
+
+                        <option>Delhi</option>
+
+                        <option>Rajasthan</option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-box full">
+
+                    <label>Delivery Address</label>
+
+                    <textarea
+                    placeholder="Enter full address"
+                    required></textarea>
+
+                </div>
+
+                <!-- PAYMENT -->
+
+                <div class="full">
+
+                    <h2 class="payment-title">
+                        Payment Method
+                    </h2>
+
+                    <div class="payment-grid">
+
+                        <div class="payment-card">
+
+                            <input
+                            type="radio"
+                            id="cod"
+                            name="payment"
+                            required>
+
+                            <label for="cod">
+                                💵 Cash On Delivery
+                            </label>
+
+                        </div>
+
+                        <div class="payment-card">
+
+                            <input
+                            type="radio"
+                            id="upi"
+                            name="payment">
+
+                            <label for="upi">
+                                📱 UPI / PhonePe
+                            </label>
+
+                        </div>
+
+                        <div class="payment-card">
+
+                            <input
+                            type="radio"
+                            id="card"
+                            name="payment">
+
+                            <label for="card">
+                                💳 Credit / Debit Card
+                            </label>
+
+                        </div>
+
+                        <div class="payment-card">
+
+                            <input
+                            type="radio"
+                            id="bank"
+                            name="payment">
+
+                            <label for="bank">
+                                🏦 Net Banking
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button class="btn" type="submit">
+
+                Confirm Order
+
+            </button>
+
+            <div class="bottom-text">
+
+                🔒 100% Secure Checkout
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+/* PAYMENT METHODS */
+
+const upiRadio =
+document.getElementById("upi");
+
+const cardRadio =
+document.getElementById("card");
+
+const bankRadio =
+document.getElementById("bank");
+
+const codRadio =
+document.getElementById("cod");
+
+/* CREATE PAYMENT BOX */
+
+const paymentSection =
+document.createElement("div");
+
+paymentSection.classList.add("full");
+
+document.querySelector(".form-grid")
+.appendChild(paymentSection);
+
+/* SHOW PAYMENT DETAILS */
+
+function showPaymentFields(){
+
+    if(upiRadio.checked){
+
+        paymentSection.innerHTML = `
+
+        <div class="input-box full">
+
+            <label>
+            Enter UPI ID
+            </label>
+
+            <input
+            type="text"
+            id="upiid"
+            placeholder="example@paytm">
+
+        </div>
+
+        `;
+
+    }
+
+    else if(cardRadio.checked){
+
+        paymentSection.innerHTML = `
+
+        <div class="form-grid full">
+
+            <div class="input-box">
+
+                <label>
+                Card Number
+                </label>
+
+                <input
+                type="text"
+                id="cardNumber"
+                maxlength="16"
+                placeholder="1234 5678 9012 3456">
+
+            </div>
+
+            <div class="input-box">
+
+                <label>
+                Card Holder Name
+                </label>
+
+                <input
+                type="text"
+                id="holder"
+                placeholder="Enter card holder name">
+
+            </div>
+
+            <div class="input-box">
+
+                <label>
+                Expiry Date
+                </label>
+
+                <input
+                type="month"
+                id="expiry">
+
+            </div>
+
+            <div class="input-box">
+
+                <label>
+                CVV
+                </label>
+
+                <input
+                type="password"
+                id="cvv"
+                maxlength="3"
+                placeholder="123">
+
+            </div>
+
+        </div>
+
+        `;
+
+    }
+
+    else if(bankRadio.checked){
+
+        paymentSection.innerHTML = `
+
+        <div class="form-grid full">
+
+            <div class="input-box">
+
+                <label>
+                Select Bank
+                </label>
+
+                <select id="bankName">
+
+                    <option value="">
+                    Choose Bank
+                    </option>
+
+                    <option>
+                    SBI
+                    </option>
+
+                    <option>
+                    HDFC
+                    </option>
+
+                    <option>
+                    ICICI
+                    </option>
+
+                    <option>
+                    Axis Bank
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="input-box">
+
+                <label>
+                Account Number
+                </label>
+
+                <input
+                type="text"
+                id="account"
+                placeholder="Enter account number">
+
+            </div>
+
+        </div>
+
+        `;
+
+    }
+
+    else{
+
+        paymentSection.innerHTML = "";
+
+    }
+
+}
+
+/* EVENTS */
+
+upiRadio.addEventListener(
+"change",
+showPaymentFields
+);
+
+cardRadio.addEventListener(
+"change",
+showPaymentFields
+);
+
+bankRadio.addEventListener(
+"change",
+showPaymentFields
+);
+
+codRadio.addEventListener(
+"change",
+showPaymentFields
+);
+
+/* FORM VALIDATION */
+
+document.getElementById("registerForm")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    let name =
+    document.getElementById("name").value.trim();
+
+    let email =
+    document.getElementById("email").value.trim();
+
+    let phone =
+    document.getElementById("phone").value.trim();
+
+    let pincode =
+    document.querySelector('input[placeholder="Enter pincode"]').value.trim();
+
+    /* EMAIL VALIDATION */
+
+    let emailPattern =
+    /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if(!email.match(emailPattern)){
+
+        alert("Enter valid email address");
+        return;
+
+    }
+
+    /* PHONE VALIDATION */
+
+    let phonePattern =
+    /^[0-9]{10}$/;
+
+    if(!phone.match(phonePattern)){
+
+        alert("Phone number must be 10 digits");
+        return;
+
+    }
+
+    /* PINCODE VALIDATION */
+
+    let pinPattern =
+    /^[0-9]{6}$/;
+
+    if(!pincode.match(pinPattern)){
+
+        alert("Pincode must be 6 digits");
+        return;
+
+    }
+
+    /* UPI VALIDATION */
+
+    if(upiRadio.checked){
+
+        let upi =
+        document.getElementById("upiid").value.trim();
+
+        if(upi === ""){
+
+            alert("Please enter UPI ID");
+            return;
+
+        }
+
+    }
+
+    /* CARD VALIDATION */
+
+    if(cardRadio.checked){
+
+        let card =
+        document.getElementById("cardNumber").value.trim();
+
+        let cvv =
+        document.getElementById("cvv").value.trim();
+
+        if(card.length !== 16){
+
+            alert("Card number must be 16 digits");
+            return;
+
+        }
+
+        if(cvv.length !== 3){
+
+            alert("CVV must be 3 digits");
+            return;
+
+        }
+
+    }
+
+    /* BANK VALIDATION */
+
+    if(bankRadio.checked){
+
+        let bank =
+        document.getElementById("bankName").value;
+
+        let account =
+        document.getElementById("account").value.trim();
+
+        if(bank === ""){
+
+            alert("Please select bank");
+            return;
+
+        }
+
+        if(account.length < 8){
+
+            alert("Enter valid account number");
+            return;
+
+        }
+
+    }
+
+    alert(
+    "🎉 Thank You " + name +
+    "! Your order has been confirmed."
+    );
+
+    window.location.href =
+    "orderhistory.html";
+
+});
+
+</script>
+</body>
+
+</html>

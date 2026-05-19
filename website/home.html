@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bake Bliss</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #fff8f3;
+            color: #333;
+        }
+
+        /* HEADER */
+
+        header{
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    background:rgba(255,255,255,0.8);
+
+    backdrop-filter:blur(12px);
+
+    padding:18px 8%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    box-shadow:0 4px 18px rgba(0,0,0,0.06);
+}
+
+        .logo {
+            font-size: 35px;
+            font-weight: bold;
+            color: #d35400;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            align-items: center;
+        }
+
+        nav a{
+    position:relative;
+    text-decoration:none;
+    color:#333;
+    font-weight:600;
+    padding:8px 0;
+    transition:0.3s;
+}
+
+nav a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:-6px;
+
+    width:0%;
+
+    height:4px;
+
+    background:#ff7b00;
+
+    border-radius:50px;
+
+    transform:translateX(-50%);
+
+    transition:0.4s;
+}
+
+nav a:hover{
+
+    color:#ff7b00;
+}
+
+nav a:hover::after{
+
+    width:100%;
+}
+        /* CART BUTTON */
+
+        .cart-box {
+            background: #ff7b00;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .cart-box:hover {
+            background: #d35400;
+            transform: translateY(-3px);
+        }
+
+        #cart-count {
+            font-size: 13px;
+        }
+
+        /* HERO */
+
+        .hero {
+            height: 90vh;
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1600&auto=format&fit=crop');
+
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 75px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 22px;
+            margin-bottom: 30px;
+        }
+
+        /* BUTTON */
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            background: #d35400;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #a84300;
+            transform: scale(1.05);
+        }
+
+        /* SECTIONS */
+
+        section {
+            padding: 80px 8%;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 42px;
+            color: #d35400;
+            margin-bottom: 50px;
+        }
+
+        /* GRID */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        /* CARDS */
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            margin-bottom: 10px;
+        }
+
+        .price {
+            color: #d35400;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        /* CART SIDEBAR */
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 420px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+            transition: 0.4s;
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-cart {
+            font-size: 30px;
+            cursor: pointer;
+            color: #d35400;
+        }
+
+        /* CART ITEM */
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            background: #fff8f3;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .cart-item img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .quantity-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: #d35400;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .remove-btn {
+            margin-top: 10px;
+            background: red;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* SUMMARY */
+
+        .order-summary {
+            background: #fff8f3;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .summary-row,
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .summary-total {
+            font-size: 22px;
+            font-weight: bold;
+            color: #d35400;
+        }
+
+        .place-order-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            background: #d35400;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* CONTACT */
+
+        .contact {
+            background: #d35400;
+            color: white;
+            text-align: center;
+        }
+
+        .contact form {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .contact input,
+        .contact textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 15px;
+        }
+
+        .contact textarea {
+            height: 120px;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            background: #1f1f1f;
+            color: white;
+            padding: 60px 8% 20px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-box h2,
+        .footer-box h3 {
+            color: #ff9f43;
+            margin-bottom: 20px;
+        }
+
+        .footer-box p {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            color: #ddd;
+        }
+
+        .footer-box a {
+            display: block;
+            text-decoration: none;
+            color: #ddd;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+
+        .footer-box a:hover {
+            color: #ff9f43;
+            transform: translateX(5px);
+        }
+
+        .footer hr {
+            border: none;
+            height: 1px;
+            background: #444;
+            margin: 20px 0;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #bbb;
+            font-size: 14px;
+        }
+        /* POPUP */
+
+.popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:5000;
+    padding:20px;
+}
+
+.popup-content{
+    background:white;
+    width:90%;
+    max-width:900px;
+    border-radius:25px;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    animation:popupShow 0.4s ease;
+}
+
+.popup-content img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.popup-details{
+    padding:40px;
+}
+
+.popup-details h2{
+    font-size:40px;
+    color:#d35400;
+    margin-bottom:20px;
+}
+
+.popup-details p{
+    color:#666;
+    line-height:1.7;
+    margin-bottom:20px;
+}
+
+.popup-price{
+    font-size:35px;
+    color:#d35400;
+    font-weight:bold;
+    margin-bottom:25px;
+}
+
+.close-popup{
+    position:absolute;
+    top:30px;
+    right:40px;
+    color:white;
+    font-size:40px;
+    cursor:pointer;
+}
+
+/* POPUP QTY */
+
+.popup-qty{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-top:20px;
+}
+
+.popup-qty button{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:50%;
+    background:#d35400;
+    color:white;
+    font-size:24px;
+    cursor:pointer;
+}
+
+.popup-qty span{
+    font-size:24px;
+    font-weight:bold;
+}
+
+@keyframes popupShow{
+
+    from{
+        transform:scale(0.7);
+        opacity:0;
+    }
+
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+        /* RESPONSIVE */
+
+        @media(max-width:992px) {
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media(max-width:768px) {
+
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-content h1 {
+                font-size: 45px;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">Bake Bliss</div>
+
+        <nav>
+
+            <ul>
+
+                <li><a href="home.html">Home</a></li>
+                <li><a href="bakeware.html">Bakeware</a></li>
+                <li><a href="boxes.html">Boxes</a></li>
+                <li><a href="ingredients.html">Ingredients</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="orderhistory.html">Order History</a></li>
+                <li>
+
+                    <div class="cart-box" onclick="openCart()">
+
+                        🛒 Cart
+                        <span id="cart-count"></span>
+
+                    </div>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>Bakery Supplies</h1>
+
+            <p>
+                Premium baking products and packaging
+            </p>
+
+            <button class="btn">
+                Shop Now
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- PRODUCTS -->
+
+    <section>
+
+        <h2 class="title">Bakeware Collection</h2>
+
+        <div class="grid">
+
+            <!-- PRODUCT 1 -->
+
+<div class="card">
+
+    <img
+    src="https://tse3.mm.bing.net/th/id/OIP.Z8yZNCq_OkkRvPycpL4EIQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3">
+
+    <div class="card-content">
+
+        <h3>Chocolate Cake</h3>
+
+        <p>Perfect for baking delicious cakes.</p>
+
+        <div class="price">₹499</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Chocolate Cake',
+        499,
+        'https://tse3.mm.bing.net/th/id/OIP.Z8yZNCq_OkkRvPycpL4EIQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
+        'Perfect for baking delicious cakes.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 2 -->
+
+<div class="card">
+
+    <img
+    src="https://www.tasteofhome.com/wp-content/uploads/2018/06/FT20_257225_F_0813_1-birthday-cake-square-JVcrop.jpg?resize=768%2C768">
+
+    <div class="card-content">
+
+        <h3>Vanilla Cake</h3>
+
+        <p>Perfect for baking delicious cakes.</p>
+
+        <div class="price">₹499</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Vanilla Cake',
+        499,
+        'https://www.tasteofhome.com/wp-content/uploads/2018/06/FT20_257225_F_0813_1-birthday-cake-square-JVcrop.jpg?resize=768%2C768',
+        'Perfect for baking delicious cakes.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+    </div>
+
+
+
+            <!-- PRODUCT 3 -->
+
+<div class="card">
+
+    <img
+    src="https://i.pinimg.com/originals/cb/8b/af/cb8bafea512dea05a162ef0304ba539b.jpg">
+
+    <div class="card-content">
+
+        <h3>Character Cake</h3>
+
+        <p>Perfect for special occasions.</p>
+
+        <div class="price">₹399</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Character Cake',
+        399,
+        'https://i.pinimg.com/originals/cb/8b/af/cb8bafea512dea05a162ef0304ba539b.jpg',
+        'Perfect for special occasions.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+           <!-- PRODUCT 4 -->
+
+<div class="card">
+
+    <img
+    src="https://tse4.mm.bing.net/th/id/OIP.P3nVIK4JeILopHCZy19v9gHaE7?r=0&rs=1&pid=ImgDetMain&o=7&rm=3">
+
+    <div class="card-content">
+
+        <h3>Donut</h3>
+
+        <p>Delicious donuts for every occasion.</p>
+
+        <div class="price">₹149</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Donut',
+        149,
+        'https://tse4.mm.bing.net/th/id/OIP.P3nVIK4JeILopHCZy19v9gHaE7?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
+        'Delicious donuts for every occasion.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+      <!-- PRODUCT 5 -->
+
+<div class="card">
+
+    <img
+    src="https://static.vecteezy.com/system/resources/previews/054/046/469/large_2x/a-delicious-pink-frosted-donut-topped-with-colorful-sprinkles-png.png">
+
+    <div class="card-content">
+
+        <h3>Donuts</h3>
+
+        <p>Assorted donuts for a delightful treat.</p>
+
+        <div class="price">₹149</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Donuts',
+        149,
+        'https://static.vecteezy.com/system/resources/previews/054/046/469/large_2x/a-delicious-pink-frosted-donut-topped-with-colorful-sprinkles-png.png',
+        'Assorted donuts for a delightful treat.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+      <!-- PRODUCT 6 -->
+
+<div class="card">
+
+    <img
+    src="https://img.freepik.com/premium-photo/single-donut-isolated-white-background_941600-89449.jpg?w=2000">
+
+    <div class="card-content">
+
+        <h3>Donuts</h3>
+
+        <p>Assorted donuts for a delightful treat.</p>
+
+        <div class="price">₹149</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Donuts',
+        149,
+        'https://img.freepik.com/premium-photo/single-donut-isolated-white-background_941600-89449.jpg?w=2000',
+        'Assorted donuts for a delightful treat.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+      <!-- PRODUCT 7 -->
+
+<div class="card">
+
+    <img
+    src="https://tse4.mm.bing.net/th/id/OIP.silTxG-1SrCvP83ScQ3EEQHaHa?r=0&w=626&h=626&rs=1&pid=ImgDetMain&o=7&rm=3">
+
+    <div class="card-content">
+
+        <h3>Chocolate Pastries</h3>
+
+        <p>Delicious pastries for every occasion.</p>
+
+        <div class="price">₹49</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Chocolate Pastries',
+        49,
+        'https://tse4.mm.bing.net/th/id/OIP.silTxG-1SrCvP83ScQ3EEQHaHa?r=0&w=626&h=626&rs=1&pid=ImgDetMain&o=7&rm=3',
+        'Delicious pastries for every occasion.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+      <!-- PRODUCT 8 -->
+
+<div class="card">
+
+    <img
+    src="https://bakewithshivesh.com/wp-content/uploads/2021/07/IMG_0745-scaled.jpg">
+
+    <div class="card-content">
+
+        <h3>Pastries</h3>
+
+        <p>Delicious pastries for every occasion.</p>
+
+        <div class="price">₹49</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Pastries',
+        49,
+        'https://bakewithshivesh.com/wp-content/uploads/2021/07/IMG_0745-scaled.jpg',
+        'Delicious pastries for every occasion.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+      <!-- PRODUCT 9 -->
+
+<div class="card">
+
+    <img
+    src="https://i.pinimg.com/736x/b2/9c/f1/b29cf1fadf7bcdd21f5ad736342c5461.jpg">
+
+    <div class="card-content">
+
+        <h3>Pastries</h3>
+
+        <p>Delicious pastries for every occasion.</p>
+
+        <div class="price">₹49</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Pastries',
+        49,
+        'https://i.pinimg.com/736x/b2/9c/f1/b29cf1fadf7bcdd21f5ad736342c5461.jpg',
+        'Delicious pastries for every occasion.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 10 -->
+
+<div class="card">
+
+    <img
+    src="https://i.pinimg.com/736x/69/f4/00/69f400f373cbdd73fd9d933f6de508f5.jpg">
+
+    <div class="card-content">
+
+        <h3>Macaron</h3>
+
+        <p>Delicious macarons for every occasion.</p>
+
+        <div class="price">₹79</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Macaron',
+        79,
+        'https://i.pinimg.com/736x/69/f4/00/69f400f373cbdd73fd9d933f6de508f5.jpg',
+        'Delicious macarons for every occasion.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+      <!-- PRODUCT 11 -->
+
+<div class="card">
+
+    <img
+    src="https://i.pinimg.com/736x/b9/10/e2/b910e2c177457cbcc439db9f1f893c15.jpg">
+
+    <div class="card-content">
+
+        <h3>Macarons</h3>
+
+        <p>Delicious macarons for every occasion.</p>
+
+        <div class="price">₹79</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Macarons',
+        79,
+        'https://i.pinimg.com/736x/b9/10/e2/b910e2c177457cbcc439db9f1f893c15.jpg',
+        'Delicious macarons for every occasion.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 12 -->
+
+<div class="card">
+
+    <img
+    src="https://i.pinimg.com/736x/5c/45/11/5c45111e15b364ad6e6e0fb474b6c4e6.jpg">
+
+    <div class="card-content">
+
+        <h3>Macarons</h3>
+
+        <p>Delicious macarons for every occasion.</p>
+
+        <div class="price">₹79</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Macarons',
+        79,
+        'https://i.pinimg.com/736x/5c/45/11/5c45111e15b364ad6e6e0fb474b6c4e6.jpg',
+        'Delicious macarons for every occasion.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+           <!-- PRODUCT 13 -->
+
+<div class="card">
+
+    <img
+    src="https://i.pinimg.com/736x/59/0c/27/590c27b26bea88f95b3d2604e6be8579.jpg">
+
+    <div class="card-content">
+
+        <h3>Cheese cakes</h3>
+
+        <p>Delicious cheese cakes for every occasion.</p>
+
+        <div class="price">₹299</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Cheese cakes',
+        299,
+        'https://i.pinimg.com/736x/59/0c/27/590c27b26bea88f95b3d2604e6be8579.jpg',
+        'Delicious cheese cakes for every occasion.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 14 -->
+
+<div class="card">
+
+    <img
+    src="https://i.pinimg.com/736x/d0/07/ad/d007ad9a3affcd308f58a17988e002c9.jpg">
+
+    <div class="card-content">
+
+        <h3>Cheese cakes</h3>
+
+        <p>Delicious cheese cakes for every occasion.</p>
+
+        <div class="price">₹299</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Cheese cakes',
+        299,
+        'https://i.pinimg.com/736x/d0/07/ad/d007ad9a3affcd308f58a17988e002c9.jpg',
+        'Delicious cheese cakes for every occasion.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- PRODUCT 15 -->
+
+<div class="card">
+
+    <img
+    src="https://i.pinimg.com/1200x/7a/10/41/7a1041f0326eb1fc676c2662e2b71333.jpg">
+
+    <div class="card-content">
+
+        <h3>Cheese cakes</h3>
+
+        <p>Delicious cheese cakes for every occasion.</p>
+
+        <div class="price">₹299</div>
+
+        <button class="btn"
+        onclick="openPopup(
+        'Cheese cakes',
+        299,
+        'https://i.pinimg.com/1200x/7a/10/41/7a1041f0326eb1fc676c2662e2b71333.jpg',
+        'Delicious cheese cakes for every occasion.'
+        )">
+
+        View Product
+
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+    </section>
+
+    <!-- CART SIDEBAR -->
+
+    <div class="cart-sidebar" id="cartSidebar">
+
+        <div class="cart-header">
+
+            <h2>Your Cart</h2>
+
+            <span class="close-cart" onclick="closeCart()">✖</span>
+
+        </div>
+
+        <div id="cart-items"></div>
+
+        <div class="order-summary">
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>₹<span id="subtotal">0</span></span>
+            </div>
+
+            <div class="summary-row">
+                <span>Delivery</span>
+                <span>₹<span id="delivery">0</span></span>
+            </div>
+
+            <div class="summary-row">
+                <span>GST (5%)</span>
+                <span>₹<span id="gst">0</span></span>
+            </div>
+
+            <div class="summary-total">
+                <span>Total</span>
+                <span>₹<span id="grand-total">0</span></span>
+            </div>
+
+            <button class="place-order-btn" onclick="placeOrder()">
+                Place Order
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- CONTACT -->
+
+    <section class="contact">
+
+        <h2>Contact Us</h2>
+
+        <br>
+
+        <form>
+
+            <input type="text" placeholder="Enter your name">
+
+            <input type="email" placeholder="Enter your email">
+
+            <textarea placeholder="Write your message"></textarea>
+
+            <button class="btn">
+                Send Message
+            </button>
+
+        </form>
+
+    </section>
+    <!-- PRODUCT POPUP -->
+
+<div class="popup" id="popup">
+
+<span class="close-popup"
+onclick="closePopup()">✖</span>
+
+<div class="popup-content">
+
+<img id="popup-img">
+
+<div class="popup-details">
+
+<h2 id="popup-title"></h2>
+
+<p id="popup-desc"></p>
+
+<div class="popup-price"
+id="popup-price"></div>
+
+<div class="popup-qty">
+
+<button onclick="popupDecrease()">−</button>
+
+<span id="popup-qty-value">1</span>
+
+<button onclick="popupIncrease()">+</button>
+
+</div>
+
+<br>
+
+<button class="btn"
+onclick="popupAddToCart()">
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <!-- ABOUT -->
+
+            <div class="footer-box">
+
+                <h2>Bake Bliss</h2>
+
+                <p>
+                    Premium bakery supplies, bakeware,
+                    cake boxes and ingredients for every baker.
+                </p>
+
+            </div>
+
+            <!-- CONTACT -->
+
+            <div class="footer-box">
+
+                <h3>Contact Us</h3>
+
+                <p>📍 Ahmedabad, Gujarat, India</p>
+
+                <p>📞 +91 98765 43210</p>
+
+                <p>📧 bakebliss@gmail.com</p>
+
+            </div>
+
+            <!-- QUICK LINKS -->
+
+            <div class="footer-box">
+
+                <h3>Quick Links</h3>
+
+                <a href="home.html">Home</a>
+                <a href="bakeware.html">Bakeware</a>
+                <a href="boxes.html">Boxes</a>
+                <a href="ingredients.html">Ingredients</a>
+                <a href="register.html">Register</a>
+
+            </div>
+
+            <!-- SOCIAL -->
+
+            <div class="footer-box">
+
+                <h3>Follow Us</h3>
+
+                <p>📸 Instagram</p>
+
+                <p>📘 Facebook</p>
+
+                <p>▶ YouTube</p>
+
+                <p>💬 WhatsApp</p>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <p class="copyright">
+
+            © 2026 Bake Bliss. All rights reserved.
+
+        </p>
+
+    </footer>
+
+    <script>
+
+
+let cart =
+JSON.parse(localStorage.getItem("bakeblissCart")) || [];
+
+let popupProduct = {};
+let popupQuantity = 1;
+
+/* OPEN CART */
+
+function openCart(){
+
+    document.getElementById("cartSidebar")
+    .classList.add("active");
+
+}
+
+function closeCart(){
+
+    document.getElementById("cartSidebar")
+    .classList.remove("active");
+
+}
+
+/* SAVE CART */
+
+function saveCart(){
+
+    localStorage.setItem(
+        "bakeblissCart",
+        JSON.stringify(cart)
+    );
+
+}
+
+/* POPUP */
+
+function openPopup(name,price,image,description){
+
+    popupProduct = {
+        name:name,
+        price:price,
+        image:image
+    };
+
+    popupQuantity = 1;
+
+    document.getElementById("popup")
+    .style.display = "flex";
+
+    document.getElementById("popup-img")
+    .src = image;
+
+    document.getElementById("popup-title")
+    .innerText = name;
+
+    document.getElementById("popup-desc")
+    .innerText = description;
+
+    document.getElementById("popup-price")
+    .innerText = "₹" + price;
+
+    document.getElementById("popup-qty-value")
+    .innerText = popupQuantity;
+
+}
+
+function closePopup(){
+
+    document.getElementById("popup")
+    .style.display = "none";
+
+}
+
+function popupIncrease(){
+
+    popupQuantity++;
+
+    document.getElementById("popup-qty-value")
+    .innerText = popupQuantity;
+
+}
+
+function popupDecrease(){
+
+    if(popupQuantity > 1){
+
+        popupQuantity--;
+
+        document.getElementById("popup-qty-value")
+        .innerText = popupQuantity;
+
+    }
+
+}
+
+/* ADD TO CART */
+
+function popupAddToCart(){
+
+    let existingItem =
+    cart.find(item=>item.name===popupProduct.name);
+
+    if(existingItem){
+
+        existingItem.quantity += popupQuantity;
+
+    }else{
+
+        cart.push({
+            name:popupProduct.name,
+            price:popupProduct.price,
+            image:popupProduct.image,
+            quantity:popupQuantity
+        });
+
+    }
+
+    saveCart();
+
+    renderCart();
+
+    closePopup();
+
+    openCart();
+
+}
+
+/* RENDER CART */
+
+function renderCart(){
+
+    let cartItems =
+    document.getElementById("cart-items");
+
+    cartItems.innerHTML = "";
+
+    let cartCount = 0;
+    let subtotal = 0;
+
+    if(cart.length === 0){
+
+        cartItems.innerHTML = `
+        <div style="
+        text-align:center;
+        padding:40px;
+        color:#777;
+        ">
+        🛒 Your cart is empty
+        </div>
+        `;
+    }
+
+    cart.forEach((item,index)=>{
+
+        cartCount += item.quantity;
+
+        subtotal +=
+        item.price * item.quantity;
+
+        cartItems.innerHTML += `
+
+        <div class="cart-item">
+
+        <img src="${item.image}">
+
+        <div class="item-details">
+
+        <h4>${item.name}</h4>
+
+        <p>₹${item.price}</p>
+
+        <div class="quantity-box">
+
+        <button class="qty-btn"
+        onclick="decreaseQty(${index})">−</button>
+
+        <span>${item.quantity}</span>
+
+        <button class="qty-btn"
+        onclick="increaseQty(${index})">+</button>
+
+        </div>
+
+        <button class="remove-btn"
+        onclick="removeItem(${index})">
+
+        Remove
+
+        </button>
+
+        </div>
+
+        </div>
+
+        `;
+
+    });
+
+    document.getElementById("cart-count")
+    .innerText = cartCount > 0 ? cartCount : "";
+
+    document.getElementById("subtotal")
+    .innerText = subtotal;
+
+    let delivery =
+    subtotal > 0 ? 50 : 0;
+
+    document.getElementById("delivery")
+    .innerText = delivery;
+
+    let gst =
+    Math.round(subtotal * 0.05);
+
+    document.getElementById("gst")
+    .innerText = gst;
+
+    let total =
+    subtotal + delivery + gst;
+
+    document.getElementById("grand-total")
+    .innerText = total;
+
+}
+
+/* QTY */
+
+function increaseQty(index){
+
+    cart[index].quantity++;
+
+    saveCart();
+
+    renderCart();
+
+}
+
+function decreaseQty(index){
+
+    if(cart[index].quantity > 1){
+
+        cart[index].quantity--;
+
+    }else{
+
+        cart.splice(index,1);
+
+    }
+
+    saveCart();
+
+    renderCart();
+
+}
+
+/* REMOVE */
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    saveCart();
+
+    renderCart();
+
+}
+
+/* PLACE ORDER */
+function placeOrder(){
+
+    if(cart.length === 0){
+        alert("Your cart is empty!");
+        return;
+    }
+
+    alert("🎉 Order Placed Successfully!");
+
+    cart = [];
+    saveCart();
+    renderCart();
+
+    window.location.href = "register.html";
+}
+
+/* LOAD */
+
+renderCart();
+
+</script>
+</body>
+</html>

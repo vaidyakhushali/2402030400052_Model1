@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bake Bliss Order History</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+    scroll-behavior:smooth;
+}
+
+/* BODY */
+
+body{
+
+    background:
+    linear-gradient(
+    135deg,
+    #fff4e6,
+    #ffe0b2,
+    #ffd1a1
+    );
+
+    color:#333;
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+    font-size:35px;
+    font-weight:700;
+    color:#ff7b00;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:25px;
+    align-items:center;
+}
+
+nav a{
+    position:relative;
+    text-decoration:none;
+    color:#333;
+    font-weight:600;
+    padding:8px 0;
+    transition:0.3s;
+}
+
+nav a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:-6px;
+
+    width:0%;
+
+    height:4px;
+
+    background:#ff7b00;
+
+    border-radius:50px;
+
+    transform:translateX(-50%);
+
+    transition:0.4s;
+}
+
+nav a:hover{
+
+    color:#ff7b00;
+}
+
+nav a:hover::after{
+
+    width:100%;
+}
+/* CART BUTTON */
+
+.cart-box{
+    background:#ff7b00;
+    color:white;
+    padding:10px 22px;
+    border-radius:50px;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.cart-box:hover{
+    background:#e56d00;
+    transform:translateY(-3px);
+}
+
+/* PAGE TITLE */
+
+.page-title{
+
+    text-align:center;
+
+    padding:70px 20px 40px;
+}
+
+.page-title h1{
+
+    font-size:52px;
+
+    color:#ff7b00;
+
+    margin-bottom:10px;
+}
+
+.page-title p{
+
+    color:#666;
+
+    font-size:18px;
+}
+
+/* CONTAINER */
+
+.container{
+
+    max-width:1300px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:30px;
+
+    padding:0 40px 60px;
+}
+
+/* CARD */
+
+.card{
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:30px;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,0.08);
+}
+
+/* ORDER HEADER */
+
+.order-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+}
+
+.order-header h2{
+
+    color:#ff7b00;
+}
+
+.status{
+
+    padding:10px 18px;
+
+    border-radius:30px;
+
+    background:#fff1e6;
+
+    color:#ff7b00;
+
+    font-weight:600;
+}
+
+/* ORDER BLOCK */
+
+.order-block{
+    margin-bottom:40px;
+    border-bottom:2px dashed #eee;
+    padding-bottom:30px;
+}
+
+/* ORDER ITEM */
+
+.order-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    background:#fff8f2;
+
+    padding:15px;
+
+    border-radius:20px;
+
+    margin-bottom:18px;
+
+    transition:0.3s;
+}
+
+.order-item:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 10px 20px rgba(255,123,0,0.1);
+}
+
+.order-item img{
+
+    width:90px;
+    height:90px;
+
+    border-radius:18px;
+
+    object-fit:cover;
+}
+
+.order-info h3{
+
+    margin-bottom:6px;
+
+    color:#333;
+}
+
+.order-info p{
+
+    color:#666;
+}
+
+/* TOTAL */
+
+.total{
+
+    margin-top:20px;
+
+    padding-top:20px;
+
+    border-top:2px dashed #eee;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#ff7b00;
+}
+
+/* TRACKING */
+
+.tracking-title{
+
+    margin-bottom:30px;
+
+    color:#ff7b00;
+}
+
+/* TRACK STEP */
+
+.track{
+
+    position:relative;
+
+    padding-left:55px;
+
+    margin-bottom:35px;
+}
+
+.track::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:18px;
+    top:0;
+
+    width:4px;
+
+    height:100%;
+
+    background:#ffd1a1;
+}
+
+.circle{
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:#ff7b00;
+
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:18px;
+
+    box-shadow:
+    0 8px 18px rgba(255,123,0,0.3);
+}
+
+.track h3{
+
+    margin-bottom:5px;
+
+    color:#333;
+}
+
+.track p{
+
+    color:#777;
+}
+
+/* ACTIVE STEP */
+
+.active .circle{
+
+    background:#ff9500;
+
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.1);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+/* BUTTON */
+
+.btn{
+
+    margin-top:25px;
+
+    width:100%;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #ff7b00,
+    #ff9500
+    );
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 12px 25px rgba(255,123,0,0.25);
+}
+.cancel-btn{
+
+    margin-top:15px;
+
+    width:100%;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:#ff3b30;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.cancel-btn:hover{
+
+    background:#d92d20;
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 20px rgba(255,59,48,0.25);
+}
+
+/* FOOTER */
+
+.footer{
+    background:#1f1f1f;
+    color:white;
+    padding:60px 8% 20px;
+    margin-top:60px;
+}
+
+.footer-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:40px;
+    margin-bottom:30px;
+}
+
+.footer-box h2,
+.footer-box h3{
+    color:#ff9f43;
+    margin-bottom:20px;
+}
+
+.footer-box p{
+    margin-bottom:12px;
+    line-height:1.7;
+    color:#ddd;
+}
+
+.footer-box a{
+    display:block;
+    text-decoration:none;
+    color:#ddd;
+    margin-bottom:10px;
+    transition:0.3s;
+}
+
+.footer-box a:hover{
+    color:#ff9f43;
+    transform:translateX(5px);
+}
+
+.footer hr{
+    border:none;
+    height:1px;
+    background:#444;
+    margin:20px 0;
+}
+
+.copyright{
+    text-align:center;
+    color:#bbb;
+    font-size:14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .container{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:768px){
+
+    header{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .page-title h1{
+        font-size:38px;
+    }
+
+    .container{
+        padding:20px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">Bake Bliss</div>
+
+    <nav>
+
+        <ul>
+
+            <li><a href="home.html">Home</a></li>
+            <li><a href="bakeware.html">Bakeware</a></li>
+            <li><a href="boxes.html">Boxes</a></li>
+            <li><a href="ingredients.html">Ingredients</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="orderhistory.html">Order History</a></li>
+
+            <li>
+                <div class="cart-box">
+                    🛒 Cart
+                </div>
+            </li>
+
+        </ul>
+
+    </nav>
+
+</header>
+
+<!-- TITLE -->
+
+<div class="page-title">
+
+    <h1>
+        My Orders
+    </h1>
+
+    <p>
+        Track your bakery orders and delivery progress
+    </p>
+
+</div>
+
+<!-- CONTAINER -->
+
+<div class="container">
+
+    <!-- ORDER HISTORY -->
+
+    <div class="card">
+
+        <div class="order-header">
+
+            <h2>
+                Order History
+            </h2>
+
+            <div class="status">
+                In Progress
+            </div>
+
+        </div>
+
+        <div id="orders-container"></div>
+
+    </div>
+
+    <!-- ORDER TRACKING -->
+
+    <div class="card">
+
+        <h2 class="tracking-title">
+            Order Progress
+        </h2>
+
+        <div class="track">
+
+            <div class="circle">
+                ✓
+            </div>
+
+            <h3>
+                Order Confirmed
+            </h3>
+
+            <p>
+                Your order has been placed successfully.
+            </p>
+
+        </div>
+
+        <div class="track">
+
+            <div class="circle">
+                ✓
+            </div>
+
+            <h3>
+                Payment Verified
+            </h3>
+
+            <p>
+                Payment confirmation completed.
+            </p>
+
+        </div>
+
+        <div class="track active">
+
+            <div class="circle">
+                🚚
+            </div>
+
+            <h3>
+                Out For Delivery
+            </h3>
+
+            <p>
+                Your order is on the way.
+            </p>
+
+        </div>
+
+        <div class="track">
+
+            <div class="circle">
+                📦
+            </div>
+
+            <h3>
+                Delivered
+            </h3>
+
+            <p>
+                Delivery will be completed soon.
+            </p>
+
+        </div>
+
+        <button class="btn"
+        onclick="goHome()">
+
+            Continue Shopping
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-box">
+
+            <h2>Bake Bliss</h2>
+
+            <p>
+                Premium bakery supplies, bakeware,
+                cake boxes and ingredients for every baker.
+            </p>
+
+        </div>
+
+        <div class="footer-box">
+
+            <h3>Contact Us</h3>
+
+            <p>📍 Ahmedabad, Gujarat, India</p>
+
+            <p>📞 +91 98765 43210</p>
+
+            <p>📧 bakebliss@gmail.com</p>
+
+        </div>
+
+        <div class="footer-box">
+
+            <h3>Quick Links</h3>
+
+            <a href="home.html">Home</a>
+            <a href="bakeware.html">Bakeware</a>
+            <a href="boxes.html">Boxes</a>
+            <a href="ingredients.html">Ingredients</a>
+            <a href="register.html">Register</a>
+
+        </div>
+
+        <div class="footer-box">
+
+            <h3>Follow Us</h3>
+
+            <p>📸 Instagram</p>
+
+            <p>📘 Facebook</p>
+
+            <p>▶ YouTube</p>
+
+            <p>💬 WhatsApp</p>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <p class="copyright">
+
+        © 2026 Bake Bliss. All rights reserved.
+
+    </p>
+
+</footer>
+
+<script>
+
+/* GET ORDERS */
+
+let orders =
+JSON.parse(localStorage.getItem("bakeblissOrders")) || [];
+
+/* REVERSE COPY */
+
+let latestOrders = [...orders].reverse();
+
+let container =
+document.getElementById("orders-container");
+
+/* IF NO ORDERS */
+
+if(latestOrders.length === 0){
+
+    container.innerHTML = `
+
+    <h2 style="
+    text-align:center;
+    color:#777;
+    margin-top:50px;
+    ">
+    No Orders Yet 🛒
+    </h2>
+
+    `;
+
+}
+
+/* SHOW ORDERS */
+
+else{
+
+    latestOrders.forEach((order,index)=>{
+
+        let itemsHTML = "";
+
+        order.items.forEach(item=>{
+
+            itemsHTML += `
+
+            <div class="order-item">
+
+                <img src="${item.image}">
+
+                <div class="order-info">
+
+                    <h3>${item.name}</h3>
+
+                    <p>
+                    Quantity : ${item.quantity}
+                    </p>
+
+                    <p>
+                    ₹${item.price}
+                    </p>
+
+                </div>
+
+            </div>
+
+            `;
+
+        });
+
+        container.innerHTML += `
+
+        <div class="order-block">
+
+            <h3 style="
+            color:#ff7b00;
+            margin-bottom:15px;
+            ">
+            Order #${latestOrders.length-index}
+            </h3>
+
+            <p style="
+            color:#777;
+            margin-bottom:20px;
+            ">
+            ${order.date}
+            </p>
+
+            ${itemsHTML}
+
+            <div class="total">
+
+                <span>Total</span>
+
+                <span>₹${order.total}</span>
+
+            </div>
+
+           <button class="btn"
+onclick="downloadInvoice(${index})">
+
+Download Invoice
+
+</button>
+
+<button class="cancel-btn"
+onclick="cancelOrder(${index})">
+
+Cancel Order
+
+</button>
+        </div>
+
+        `;
+
+    });
+
+}
+
+/* DOWNLOAD INVOICE */
+
+function downloadInvoice(index){
+
+    let order = latestOrders[index];
+
+    let text = `
+BAKE BLISS INVOICE
+
+Order Date : ${order.date}
+
+--------------------------------
+
+`;
+
+    order.items.forEach(item=>{
+
+        text += `
+${item.name}
+
+Quantity : ${item.quantity}
+
+Price : ₹${item.price}
+
+--------------------------------
+`;
+
+    });
+
+    text += `
+
+TOTAL : ₹${order.total}
+
+Thank You For Shopping With Bake Bliss ❤️
+`;
+
+    let blob =
+    new Blob([text], {type:"text/plain"});
+
+    let link =
+    document.createElement("a");
+
+    link.href =
+    URL.createObjectURL(blob);
+
+    link.download =
+    "BakeBliss_Invoice.txt";
+
+    link.click();
+
+}
+
+/* CONTINUE SHOPPING */
+
+function goHome(){
+
+    window.location.href = "home.html";
+
+}
+function cancelOrder(index){
+
+    let confirmCancel =
+    confirm("Are you sure you want to cancel this order?");
+
+    if(confirmCancel){
+
+        latestOrders.splice(index,1);
+
+        localStorage.setItem(
+            "bakeblissOrders",
+            JSON.stringify([...latestOrders].reverse())
+        );
+
+        alert("❌ Order Cancelled Successfully");
+
+        location.reload();
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>
