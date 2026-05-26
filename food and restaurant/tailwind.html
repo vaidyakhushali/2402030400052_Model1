@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Beginner Blog — Start Your Writing Journey</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink:   #1a1208;
+      --cream: #fdf8f0;
+      --amber: #e8a020;
+      --rust:  #c0522a;
+      --mist:  #f0ebe2;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); }
+
+    /* ── Typography helpers ── */
+    .font-display { font-family: 'Playfair Display', serif; }
+    .font-body    { font-family: 'Lora', serif; }
+
+    /* ── Navbar shadow ── */
+    .navbar-shadow { box-shadow: 0 2px 20px rgba(26,18,8,0.08); }
+
+    /* ── Hero ── */
+    .hero-bg {
+      background: linear-gradient(135deg, #1a1208 0%, #2d1f0a 50%, #1a1208 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(232,160,32,0.15) 0%, transparent 70%);
+    }
+
+    /* ── Cards ── */
+    .blog-card { transition: transform .3s ease, box-shadow .3s ease; }
+    .blog-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(26,18,8,0.15); }
+
+    /* ── Service icon bounce ── */
+    .service-icon { display:inline-block; transition: transform .3s ease; }
+    .service-card:hover .service-icon { transform: scale(1.15) rotate(-5deg); }
+
+    /* ── Gallery zoom ── */
+    .gallery-wrap { overflow: hidden; border-radius: 12px; }
+    .gallery-img  { transition: transform .4s ease; display:block; width:100%; height:100%; object-fit:cover; }
+    .gallery-wrap:hover .gallery-img { transform: scale(1.07); }
+
+    /* ── Stars ── */
+    .star { color: var(--amber); }
+
+    /* ── Fade-up animation ── */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .fade-up { animation: fadeUp .7s ease forwards; }
+
+    /* ── Form focus ── */
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px rgba(232,160,32,0.2);
+    }
+
+    /* ══════════════════════════════════════════
+       MOBILE MENU  — pure CSS checkbox hack
+    ══════════════════════════════════════════ */
+    #menu-toggle { display: none; }
+
+    .hamburger-label {
+      display: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .hamburger-label span {
+      display: block; width: 24px; height: 2px;
+      background: var(--ink); border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+
+    @media (max-width: 1023px) {
+      .hamburger-label { display: flex; }
+      .desktop-nav     { display: none !important; }
+      .desktop-cta     { display: none !important; }
+    }
+
+    .mobile-menu {
+      max-height: 0; opacity: 0; overflow: hidden;
+      transition: max-height .4s ease, opacity .4s ease;
+      background: var(--cream);
+      border-top: 1px solid var(--mist);
+    }
+    #menu-toggle:checked ~ .mobile-menu {
+      max-height: 400px; opacity: 1;
+    }
+    /* Animate hamburger → X */
+    #menu-toggle:checked ~ .nav-bar .hamburger-label span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    #menu-toggle:checked ~ .nav-bar .hamburger-label span:nth-child(2) {
+      opacity: 0;
+    }
+    #menu-toggle:checked ~ .nav-bar .hamburger-label span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ══════════════════════════════════════════
+       MODAL  — pure CSS :target trick
+    ══════════════════════════════════════════ */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(26,18,8,0.6);
+      backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay:target { display: flex; }
+
+    .modal-box {
+      position: relative;
+      background: var(--cream);
+      border-radius: 24px;
+      box-shadow: 0 25px 60px rgba(26,18,8,0.3);
+      width: 100%; max-width: 440px;
+      padding: 2.5rem;
+    }
+    .modal-close {
+      position: absolute; top: 1.2rem; right: 1.2rem;
+      font-size: 1.4rem; line-height: 1;
+      color: rgba(26,18,8,0.35);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .modal-close:hover { color: var(--ink); }
+
+    /* ══════════════════════════════════════════
+       CAROUSEL  — CSS scroll snap
+    ══════════════════════════════════════════ */
+    .carousel-scroll {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .carousel-scroll::-webkit-scrollbar { display: none; }
+
+    .carousel-slide {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      position: relative;
+    }
+
+    /* Dot indicators via radio buttons */
+    .carousel-dots { display:flex; gap:8px; justify-content:center; margin-top:.75rem; }
+    .dot-label {
+      width:8px; height:8px; border-radius:50%;
+      background: rgba(26,18,8,0.2);
+      cursor: pointer; transition: background .3s;
+    }
+    /* We use anchor links to scroll, so just style them consistently */
+    .dot-label:hover { background: var(--amber); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     NAVBAR  (Task 2 & 3)
+     checkbox is sibling of nav so CSS ~ works
+════════════════════════════════════════ -->
+<input type="checkbox" id="menu-toggle" aria-hidden="true"/>
+<nav class="bg-[#fdf8f0] navbar-shadow sticky top-0 z-50">
+  <div class="nav-bar container mx-auto px-6 flex items-center justify-between py-4">
+    <!-- Brand -->
+    <a href="#home" class="flex items-center gap-2">
+      <span class="w-8 h-8 rounded-full flex items-center justify-center font-display font-black text-sm" style="background:var(--amber);color:var(--ink);">B</span>
+      <span class="font-display font-bold text-xl" style="color:var(--ink);">The Beginner<span style="color:var(--amber);">Blog</span></span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="desktop-nav hidden lg:flex items-center gap-8 font-medium text-sm">
+      <li><a href="#home"    class="hover:text-[#e8a020] transition-colors" style="color:var(--ink);">Home</a></li>
+      <li><a href="#about"   class="hover:text-[#e8a020] transition-colors" style="color:var(--ink);">About</a></li>
+      <li><a href="#posts"   class="hover:text-[#e8a020] transition-colors" style="color:var(--ink);">Posts</a></li>
+      <li><a href="#gallery" class="hover:text-[#e8a020] transition-colors" style="color:var(--ink);">Gallery</a></li>
+      <li><a href="#contact" class="hover:text-[#e8a020] transition-colors" style="color:var(--ink);">Contact</a></li>
+    </ul>
+
+    <!-- Desktop CTA + Hamburger -->
+    <div class="flex items-center gap-4">
+      <a href="#subscribe-modal" class="desktop-cta hidden lg:block font-semibold text-sm px-5 py-2 rounded-full transition-colors" style="background:var(--amber);color:var(--ink);">Subscribe</a>
+      <label for="menu-toggle" class="hamburger-label" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu lg:hidden">
+    <ul class="flex flex-col px-6 py-4 gap-4 font-medium text-sm">
+      <li><a href="#home"    class="block hover:text-[#e8a020] transition-colors" style="color:var(--ink);">Home</a></li>
+      <li><a href="#about"   class="block hover:text-[#e8a020] transition-colors" style="color:var(--ink);">About</a></li>
+      <li><a href="#posts"   class="block hover:text-[#e8a020] transition-colors" style="color:var(--ink);">Posts</a></li>
+      <li><a href="#gallery" class="block hover:text-[#e8a020] transition-colors" style="color:var(--ink);">Gallery</a></li>
+      <li><a href="#contact" class="block hover:text-[#e8a020] transition-colors" style="color:var(--ink);">Contact</a></li>
+      <li><a href="#subscribe-modal" class="block text-center font-semibold py-2 rounded-full transition-colors" style="background:var(--amber);color:var(--ink);">Subscribe</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HERO  (Task 4)
+════════════════════════════════════════ -->
+<section id="home" class="hero-bg min-h-screen flex items-center">
+  <div class="container mx-auto px-6 py-24 relative z-10">
+    <div class="flex flex-col lg:flex-row items-center gap-16">
+      <!-- Text -->
+      <div class="lg:w-1/2 text-center lg:text-left fade-up">
+        <span class="inline-block border text-xs font-semibold px-4 py-1 rounded-full mb-6 tracking-widest uppercase" style="background:rgba(232,160,32,0.2);border-color:rgba(232,160,32,0.4);color:var(--amber);">A Beginner's Space</span>
+        <h1 class="font-display font-black text-5xl lg:text-7xl leading-tight mb-6" style="color:var(--cream);">
+          Write.<br/>Share.<br/><em style="color:var(--amber);">Grow.</em>
+        </h1>
+        <p class="font-body text-lg lg:text-xl leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0" style="color:rgba(253,248,240,0.7);">
+          A cozy corner of the internet for beginners learning to blog, write, and tell their stories. No experience needed — just curiosity and a keyboard.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <a href="#posts" class="font-semibold px-8 py-3 rounded-full text-center transition-colors" style="background:var(--amber);color:var(--ink);">Read Posts →</a>
+          <a href="#about" class="font-medium px-8 py-3 rounded-full text-center transition-colors border" style="border-color:rgba(253,248,240,0.3);color:var(--cream);">About the Blog</a>
+        </div>
+      </div>
+      <!-- Image -->
+      <div class="lg:w-1/2 flex justify-center">
+        <div class="relative">
+          <div class="absolute -inset-4 rounded-3xl blur-2xl" style="background:rgba(232,160,32,0.2);"></div>
+          <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&q=80" alt="Writing" class="relative w-80 lg:w-96 h-80 lg:h-96 object-cover rounded-3xl shadow-2xl"/>
+          <div class="absolute -bottom-4 -right-4 font-display font-bold text-sm px-4 py-2 rounded-xl shadow-lg" style="background:var(--amber);color:var(--ink);">🖊 Start Writing Today</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAROUSEL  (Task 14) — CSS scroll snap
+════════════════════════════════════════ -->
+<section class="py-2" style="background:var(--mist);">
+  <div class="carousel-scroll">
+
+    <div id="slide-1" class="carousel-slide">
+      <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&q=80" alt="Slide 1" class="w-full h-64 lg:h-80 object-cover"/>
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6" style="background:rgba(26,18,8,0.5);position:absolute;top:0;left:0;right:0;bottom:0;">
+        <h3 class="font-display font-bold text-3xl lg:text-5xl mb-3" style="color:var(--cream);">Start Your First Blog Post</h3>
+        <p class="font-body text-lg max-w-xl" style="color:rgba(253,248,240,0.8);">A blank page is just an invitation. Let's fill it together.</p>
+      </div>
+    </div>
+
+    <div id="slide-2" class="carousel-slide">
+      <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200&q=80" alt="Slide 2" class="w-full h-64 lg:h-80 object-cover"/>
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6" style="background:rgba(26,18,8,0.5);position:absolute;top:0;left:0;right:0;bottom:0;">
+        <h3 class="font-display font-bold text-3xl lg:text-5xl mb-3" style="color:var(--cream);">Find Your Writing Voice</h3>
+        <p class="font-body text-lg max-w-xl" style="color:rgba(253,248,240,0.8);">You have a unique story. Learn how to tell it beautifully.</p>
+      </div>
+    </div>
+
+    <div id="slide-3" class="carousel-slide">
+      <img src="https://images.unsplash.com/photo-1542435503-ec7b0f3bb0a8?w=1200&q=80" alt="Slide 3" class="w-full h-64 lg:h-80 object-cover"/>
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6" style="background:rgba(26,18,8,0.5);position:absolute;top:0;left:0;right:0;bottom:0;">
+        <h3 class="font-display font-bold text-3xl lg:text-5xl mb-3" style="color:var(--cream);">Build a Community</h3>
+        <p class="font-body text-lg max-w-xl" style="color:rgba(253,248,240,0.8);">Connect with readers who care about what you have to say.</p>
+      </div>
+    </div>
+
+  </div>
+  <!-- Dot nav using anchor links -->
+  <div class="carousel-dots py-3">
+    <a href="#slide-1" class="dot-label" style="background:var(--amber);"></a>
+    <a href="#slide-2" class="dot-label"></a>
+    <a href="#slide-3" class="dot-label"></a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     ABOUT
+════════════════════════════════════════ -->
+<section id="about" class="py-24" style="background:var(--cream);">
+  <div class="container mx-auto px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="font-semibold text-sm tracking-widest uppercase" style="color:var(--amber);">Who We Are</span>
+      <h2 class="font-display font-bold text-4xl lg:text-5xl mt-3 mb-6" style="color:var(--ink);">A Blog Built for Beginners</h2>
+      <p class="font-body text-lg leading-relaxed" style="color:rgba(26,18,8,0.6);">
+        The Beginner Blog is your starting point for learning how to write, create, and share online. We cover everything from picking a niche and writing your first post, to growing your audience and finding your voice — all in plain, friendly language.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SERVICES  (Task 7)
+════════════════════════════════════════ -->
+<section class="py-20" style="background:var(--mist);">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-14">
+      <span class="font-semibold text-sm tracking-widest uppercase" style="color:var(--amber);">What We Offer</span>
+      <h2 class="font-display font-bold text-4xl lg:text-5xl mt-3" style="color:var(--ink);">Our Services</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="service-card rounded-2xl p-8 text-center shadow-sm hover:shadow-lg transition-shadow" style="background:var(--cream);">
+        <div class="service-icon text-5xl mb-5">✍️</div>
+        <h3 class="font-display font-bold text-xl mb-3" style="color:var(--ink);">Writing Guides</h3>
+        <p class="font-body text-sm leading-relaxed" style="color:rgba(26,18,8,0.6);">Step-by-step guides for writing compelling blog posts from scratch.</p>
+      </div>
+      <div class="service-card rounded-2xl p-8 text-center shadow-sm hover:shadow-lg transition-shadow" style="background:var(--cream);">
+        <div class="service-icon text-5xl mb-5">📖</div>
+        <h3 class="font-display font-bold text-xl mb-3" style="color:var(--ink);">Online Workshops</h3>
+        <p class="font-body text-sm leading-relaxed" style="color:rgba(26,18,8,0.6);">Join live and recorded workshops on blogging, SEO, and content creation.</p>
+      </div>
+      <div class="service-card rounded-2xl p-8 text-center shadow-sm hover:shadow-lg transition-shadow" style="background:var(--cream);">
+        <div class="service-icon text-5xl mb-5">🤝</div>
+        <h3 class="font-display font-bold text-xl mb-3" style="color:var(--ink);">Community</h3>
+        <p class="font-body text-sm leading-relaxed" style="color:rgba(26,18,8,0.6);">Connect with fellow beginner bloggers who are on the same journey.</p>
+      </div>
+      <div class="service-card rounded-2xl p-8 text-center shadow-sm hover:shadow-lg transition-shadow" style="background:var(--cream);">
+        <div class="service-icon text-5xl mb-5">⚡</div>
+        <h3 class="font-display font-bold text-xl mb-3" style="color:var(--ink);">Quick Tips</h3>
+        <p class="font-body text-sm leading-relaxed" style="color:rgba(26,18,8,0.6);">Fast, actionable blogging tips you can apply in under 10 minutes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ═══════════════════════════════════════
+     BLOG POST CARDS
+════════════════════════════════════════ -->
+<section id="posts" class="py-24" style="background:var(--cream);">
+  <div class="container mx-auto px-6">
+
+    <div class="text-center mb-14">
+      <span class="font-semibold text-sm tracking-widest uppercase" style="color:var(--amber);">
+        Latest Writing
+      </span>
+
+      <h2 class="font-display font-bold text-4xl lg:text-5xl mt-3" style="color:var(--ink);">
+        Recent Posts
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- CARD 1 -->
+      <div class="blog-card rounded-2xl overflow-hidden shadow border flex flex-col"
+        style="background:var(--cream);border-color:var(--mist);">
+
+        <img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=600&q=80"
+          class="w-full h-48 object-cover"/>
+
+        <div class="p-6 flex flex-col gap-3 flex-grow">
+
+          <span class="text-xs font-semibold uppercase tracking-widest"
+            style="color:var(--amber);">
+            Getting Started
+          </span>
+
+          <h3 class="font-display font-bold text-xl" style="color:var(--ink);">
+            How to Write Your Very First Blog Post
+          </h3>
+
+          <p class="font-body text-sm leading-relaxed flex-grow"
+            style="color:rgba(26,18,8,0.6);">
+            Everything feels hard the first time. Here's a simple framework.
+          </p>
+
+          <div class="flex items-center justify-between pt-3 border-t"
+            style="border-color:var(--mist);">
+
+            <span class="text-xs" style="color:rgba(26,18,8,0.4);">
+              May 10, 2026 · 5 min
+            </span>
+
+            <a href="#post1"
+              class="font-semibold text-sm"
+              style="color:var(--amber);">
+              Read →
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="blog-card rounded-2xl overflow-hidden shadow border flex flex-col"
+        style="background:var(--cream);border-color:var(--mist);">
+
+        <img src="https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=600&q=80"
+          class="w-full h-48 object-cover"/>
+
+        <div class="p-6 flex flex-col gap-3 flex-grow">
+
+          <span class="text-xs font-semibold uppercase tracking-widest"
+            style="color:var(--amber);">
+            Writing Tips
+          </span>
+
+          <h3 class="font-display font-bold text-xl" style="color:var(--ink);">
+            10 Writing Habits Every Blogger Should Build
+          </h3>
+
+          <p class="font-body text-sm leading-relaxed flex-grow"
+            style="color:rgba(26,18,8,0.6);">
+            Small daily habits create consistent writers.
+          </p>
+
+          <div class="flex items-center justify-between pt-3 border-t"
+            style="border-color:var(--mist);">
+
+            <span class="text-xs" style="color:rgba(26,18,8,0.4);">
+              May 5, 2026 · 7 min
+            </span>
+
+            <a href="#post2"
+              class="font-semibold text-sm"
+              style="color:var(--amber);">
+              Read →
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="blog-card rounded-2xl overflow-hidden shadow border flex flex-col"
+        style="background:var(--cream);border-color:var(--mist);">
+
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80"
+          class="w-full h-48 object-cover"/>
+
+        <div class="p-6 flex flex-col gap-3 flex-grow">
+
+          <span class="text-xs font-semibold uppercase tracking-widest"
+            style="color:var(--amber);">
+            SEO Basics
+          </span>
+
+          <h3 class="font-display font-bold text-xl" style="color:var(--ink);">
+            SEO for Beginners
+          </h3>
+
+          <p class="font-body text-sm leading-relaxed flex-grow"
+            style="color:rgba(26,18,8,0.6);">
+            Learn how to rank your blog on Google.
+          </p>
+
+          <div class="flex items-center justify-between pt-3 border-t"
+            style="border-color:var(--mist);">
+
+            <span class="text-xs" style="color:rgba(26,18,8,0.4);">
+              Apr 20, 2026 · 8 min
+            </span>
+
+            <a href="#post3"
+              class="font-semibold text-sm"
+              style="color:var(--amber);">
+              Read →
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     BLOG DETAILS
+════════════════════════════════════════ -->
+
+<section id="post1" class="py-20 bg-white">
+  <div class="container mx-auto px-6 max-w-4xl">
+
+    <h2 class="font-display text-4xl font-bold mb-6">
+      How to Write Your Very First Blog Post
+    </h2>
+
+    <p class="text-lg leading-8 mb-4">
+      Starting your first blog post can feel difficult, but the easiest way is
+      to write like you are talking to a friend.
+    </p>
+
+    <p class="text-lg leading-8 mb-4">
+      Choose one topic you enjoy and explain it simply. Don't focus on perfection.
+    </p>
+
+    <p class="text-lg leading-8">
+      Publishing your first post is more important than making it perfect.
+    </p>
+
+  </div>
+</section>
+
+
+<section id="post2" class="py-20" style="background:var(--mist);">
+  <div class="container mx-auto px-6 max-w-4xl">
+
+    <h2 class="font-display text-4xl font-bold mb-6">
+      10 Writing Habits Every Blogger Should Build
+    </h2>
+
+    <p class="text-lg leading-8 mb-4">
+      Write daily even if it is only for 15 minutes.
+    </p>
+
+    <p class="text-lg leading-8 mb-4">
+      Read blogs from other writers to improve your creativity.
+    </p>
+
+    <p class="text-lg leading-8">
+      Consistency matters more than writing huge articles once a month.
+    </p>
+
+  </div>
+</section>
+
+
+<section id="post3" class="py-20 bg-white">
+  <div class="container mx-auto px-6 max-w-4xl">
+
+    <h2 class="font-display text-4xl font-bold mb-6">
+      SEO for Beginners
+    </h2>
+
+    <p class="text-lg leading-8 mb-4">
+      SEO helps your blog appear on search engines like Google.
+    </p>
+
+    <p class="text-lg leading-8 mb-4">
+      Use proper headings, keywords, and good titles.
+    </p>
+
+    <p class="text-lg leading-8">
+      SEO takes time, but consistency helps your blog grow.
+    </p>
+
+  </div>
+</section>
+<!-- ═══════════════════════════════════════
+     GALLERY  (Task 8)
+════════════════════════════════════════ -->
+<section id="gallery" class="py-24" style="background:var(--mist);">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-14">
+      <span class="font-semibold text-sm tracking-widest uppercase" style="color:var(--amber);">Inspiration</span>
+      <h2 class="font-display font-bold text-4xl lg:text-5xl mt-3" style="color:var(--ink);">Gallery</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="gallery-wrap h-56"><img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&q=80" class="gallery-img" alt=""/></div>
+      <div class="gallery-wrap h-56"><img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&q=80" class="gallery-img" alt=""/></div>
+      <div class="gallery-wrap h-56"><img src="https://images.unsplash.com/photo-1509475826633-fed577a2c71b?w=600&q=80" class="gallery-img" alt=""/></div>
+      <div class="gallery-wrap h-56"><img src="https://images.unsplash.com/photo-1467803738586-46b7eb7b16a1?w=600&q=80" class="gallery-img" alt=""/></div>
+      <div class="gallery-wrap h-56"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80" class="gallery-img" alt=""/></div>
+      <div class="gallery-wrap h-56"><img src="https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=600&q=80" class="gallery-img" alt=""/></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     REVIEWS  (Task 9)
+════════════════════════════════════════ -->
+<section class="py-24" style="background:var(--cream);">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-14">
+      <span class="font-semibold text-sm tracking-widest uppercase" style="color:var(--amber);">Testimonials</span>
+      <h2 class="font-display font-bold text-4xl lg:text-5xl mt-3" style="color:var(--ink);">What Readers Say</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <div class="rounded-2xl p-8 text-center shadow-sm" style="background:var(--mist);">
+        <img src="https://i.pravatar.cc/80?img=1" alt="Priya" class="w-16 h-16 rounded-full mx-auto mb-4 object-cover" style="border:4px solid var(--amber);"/>
+        <div class="flex justify-center gap-1 mb-3">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="font-body italic text-sm leading-relaxed mb-4" style="color:rgba(26,18,8,0.7);">"This blog changed the way I approach writing. I published my first post after just two weeks of reading here!"</p>
+        <p class="font-semibold text-sm" style="color:var(--ink);">Priya Sharma</p>
+        <p class="text-xs" style="color:rgba(26,18,8,0.4);">Aspiring blogger, Ahmedabad</p>
+      </div>
+
+      <div class="rounded-2xl p-8 text-center shadow-sm" style="background:var(--mist);">
+        <img src="https://i.pravatar.cc/80?img=12" alt="Rahul" class="w-16 h-16 rounded-full mx-auto mb-4 object-cover" style="border:4px solid var(--amber);"/>
+        <div class="flex justify-center gap-1 mb-3">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="font-body italic text-sm leading-relaxed mb-4" style="color:rgba(26,18,8,0.7);">"The SEO guide was exactly what I needed. Simple, clear, and no jargon. I finally understand how to get readers."</p>
+        <p class="font-semibold text-sm" style="color:var(--ink);">Rahul Mehta</p>
+        <p class="text-xs" style="color:rgba(26,18,8,0.4);">Tech blogger, Mumbai</p>
+      </div>
+
+      <div class="rounded-2xl p-8 text-center shadow-sm" style="background:var(--mist);">
+        <img src="https://i.pravatar.cc/80?img=25" alt="Aisha" class="w-16 h-16 rounded-full mx-auto mb-4 object-cover" style="border:4px solid var(--amber);"/>
+        <div class="flex justify-center gap-1 mb-3">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="font-body italic text-sm leading-relaxed mb-4" style="color:rgba(26,18,8,0.7);">"I love how encouraging and beginner-friendly everything is. This is the only blog I recommend to new writers."</p>
+        <p class="font-semibold text-sm" style="color:var(--ink);">Aisha Khan</p>
+        <p class="text-xs" style="color:rgba(26,18,8,0.4);">Lifestyle writer, Pune</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CONTACT FORM  (Task 10)
+════════════════════════════════════════ -->
+<section id="contact" class="py-24" style="background:var(--mist);">
+  <div class="container mx-auto px-6 max-w-2xl">
+    <div class="text-center mb-12">
+      <span class="font-semibold text-sm tracking-widest uppercase" style="color:var(--amber);">Get in Touch</span>
+      <h2 class="font-display font-bold text-4xl lg:text-5xl mt-3" style="color:var(--ink);">Contact Us</h2>
+      <p class="font-body mt-4" style="color:rgba(26,18,8,0.6);">Have a question, suggestion, or just want to say hello?</p>
+    </div>
+    <div class="rounded-3xl p-8 lg:p-12 shadow-sm" style="background:var(--cream);">
+      <div class="space-y-5">
+        <div>
+          <label class="block font-medium text-sm mb-2" style="color:var(--ink);">Full Name</label>
+          <input type="text" placeholder="Your name" class="w-full border rounded-xl px-4 py-3 text-sm transition-all" style="border-color:var(--mist);background:var(--cream);color:var(--ink);"/>
+        </div>
+        <div>
+          <label class="block font-medium text-sm mb-2" style="color:var(--ink);">Email Address</label>
+          <input type="email" placeholder="your@email.com" class="w-full border rounded-xl px-4 py-3 text-sm transition-all" style="border-color:var(--mist);background:var(--cream);color:var(--ink);"/>
+        </div>
+        <div>
+          <label class="block font-medium text-sm mb-2" style="color:var(--ink);">Phone Number</label>
+          <input type="tel" placeholder="+91 98765 43210" class="w-full border rounded-xl px-4 py-3 text-sm transition-all" style="border-color:var(--mist);background:var(--cream);color:var(--ink);"/>
+        </div>
+        <div>
+          <label class="block font-medium text-sm mb-2" style="color:var(--ink);">Topic</label>
+          <select class="w-full border rounded-xl px-4 py-3 text-sm transition-all" style="border-color:var(--mist);background:var(--cream);color:var(--ink);">
+            <option value="">Select a topic…</option>
+            <option>Writing Advice</option>
+            <option>Guest Post</option>
+            <option>Collaboration</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-medium text-sm mb-2" style="color:var(--ink);">Message</label>
+          <textarea rows="5" placeholder="Write your message here…" class="w-full border rounded-xl px-4 py-3 text-sm transition-all resize-none" style="border-color:var(--mist);background:var(--cream);color:var(--ink);"></textarea>
+        </div>
+        <button type="submit" class="w-full font-semibold py-4 rounded-xl transition-colors text-sm" style="background:var(--amber);color:var(--ink);">
+          Send Message →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER  (Task 11)
+════════════════════════════════════════ -->
+<footer class="py-16" style="background:var(--ink);color:var(--cream);">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-8 h-8 rounded-full flex items-center justify-center font-display font-black text-sm" style="background:var(--amber);color:var(--ink);">B</span>
+          <span class="font-display font-bold text-xl">The Beginner<span style="color:var(--amber);">Blog</span></span>
+        </div>
+        <p class="font-body text-sm leading-relaxed" style="color:rgba(253,248,240,0.5);">Your starting point for learning to write, share, and grow your audience online.</p>
+      </div>
+      <div>
+        <h4 class="font-display font-bold text-base mb-5" style="color:var(--amber);">Quick Links</h4>
+        <ul class="space-y-3 text-sm" style="color:rgba(253,248,240,0.6);">
+          <li><a href="#home"    class="hover:text-[#e8a020] transition-colors">Home</a></li>
+          <li><a href="#about"   class="hover:text-[#e8a020] transition-colors">About</a></li>
+          <li><a href="#posts"   class="hover:text-[#e8a020] transition-colors">Posts</a></li>
+          <li><a href="#contact" class="hover:text-[#e8a020] transition-colors">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-display font-bold text-base mb-5" style="color:var(--amber);">Contact</h4>
+        <ul class="space-y-3 text-sm" style="color:rgba(253,248,240,0.6);">
+          <li>📍 Ahmedabad, Gujarat, India</li>
+          <li>📞 +91 98765 43210</li>
+          <li>✉️ hello@beginnerblog.in</li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t pt-8 flex flex-col md:flex-row items-center justify-between gap-4" style="border-color:rgba(253,248,240,0.1);">
+      <p class="text-sm" style="color:rgba(253,248,240,0.4);">© 2026 The Beginner Blog. All rights reserved.</p>
+      <div class="flex gap-5">
+        <a href="#" class="text-sm transition-colors hover:text-[#e8a020]" style="color:rgba(253,248,240,0.4);">Twitter</a>
+        <a href="#" class="text-sm transition-colors hover:text-[#e8a020]" style="color:rgba(253,248,240,0.4);">Instagram</a>
+        <a href="#" class="text-sm transition-colors hover:text-[#e8a020]" style="color:rgba(253,248,240,0.4);">LinkedIn</a>
+        <a href="#" class="text-sm transition-colors hover:text-[#e8a020]" style="color:rgba(253,248,240,0.4);">YouTube</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     MODAL  (Task 13) — CSS :target trick
+     Open:  <a href="#subscribe-modal">
+     Close: <a href="#">  (clears the hash)
+════════════════════════════════════════ -->
+<div id="subscribe-modal" class="modal-overlay">
+  <!-- clicking backdrop closes modal -->
+  <a href="#" class="absolute inset-0" aria-label="Close modal"></a>
+  <div class="modal-box">
+    <a href="#" class="modal-close" aria-label="Close">✕</a>
+    <h3 class="font-display font-bold text-2xl mb-1" style="color:var(--ink);">Subscribe to the Blog 🖊</h3>
+    <p class="font-body text-sm mb-6" style="color:rgba(26,18,8,0.6);">Get new posts straight to your inbox. No spam, ever.</p>
+    <div class="space-y-4">
+      <div>
+        <label class="block font-medium text-sm mb-2" style="color:var(--ink);">Your Name</label>
+        <input type="text" placeholder="e.g. Riya Patel" class="w-full border rounded-xl px-4 py-3 text-sm" style="border-color:var(--mist);background:white;color:var(--ink);"/>
+      </div>
+      <div>
+        <label class="block font-medium text-sm mb-2" style="color:var(--ink);">Email Address</label>
+        <input type="email" placeholder="you@example.com" class="w-full border rounded-xl px-4 py-3 text-sm" style="border-color:var(--mist);background:white;color:var(--ink);"/>
+      </div>
+      <div>
+        <label class="block font-medium text-sm mb-2" style="color:var(--ink);">I'm interested in…</label>
+        <select class="w-full border rounded-xl px-4 py-3 text-sm" style="border-color:var(--mist);background:white;color:var(--ink);">
+          <option>All Posts</option>
+          <option>Writing Tips</option>
+          <option>SEO &amp; Growth</option>
+          <option>Monetization</option>
+        </select>
+      </div>
+    </div>
+    <div class="mt-6 flex flex-col gap-3">
+      <button class="w-full font-semibold py-3 rounded-xl transition-colors text-sm" style="background:var(--amber);color:var(--ink);">Yes, Subscribe Me! →</button>
+      <a href="#" class="block text-center text-sm py-1 transition-colors" style="color:rgba(26,18,8,0.4);">Maybe later</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

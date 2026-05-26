@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register – BakeBliss</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body { background: var(--cream); }
+    .auth-page {
+      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+      margin-top: 66px;
+    }
+
+    /* LEFT PANEL */
+    .auth-left {
+      background: linear-gradient(160deg, var(--bark) 0%, #3D2010 50%, var(--amber) 100%);
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center; padding: 60px 8%; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .auth-left::before { content:'🍞'; font-size:220px; position:absolute; top:-60px; right:-50px; opacity:.06; }
+    .auth-left::after  { content:'🧁'; font-size:180px; position:absolute; bottom:-40px; left:-30px; opacity:.06; }
+    .al-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 44px; font-weight: 700; color: #fff; margin-bottom: 6px;
+    }
+    .al-logo span { color: var(--amber-light); }
+    .al-tagline { color: rgba(255,255,255,.5); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 36px; }
+    .auth-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 600; color: rgba(255,255,255,.9); margin-bottom: 12px;
+    }
+    .auth-left p { color: rgba(255,255,255,.5); font-size: 15px; line-height: 1.7; max-width: 300px; margin-bottom: 36px; }
+    .perks { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 300px; }
+    .perk {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px; padding: 13px 16px; text-align: left;
+      transition: background .3s;
+    }
+    .perk:hover { background: rgba(255,255,255,.12); }
+    .perk .pi { font-size: 22px; flex-shrink: 0; }
+    .perk p { color: rgba(255,255,255,.7); font-size: 13px; line-height: 1.5; }
+
+    /* RIGHT PANEL */
+    .auth-right {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 60px 8%; background: #fff;
+      overflow-y: auto;
+    }
+    .auth-wrap { max-width: 420px; margin: 0 auto; width: 100%; }
+
+    .auth-tabs {
+      display: flex; gap: 0; margin-bottom: 36px;
+      background: var(--cream); border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 4px;
+    }
+    .auth-tab {
+      flex: 1; padding: 11px; border: none; background: transparent;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      font-size: 14px; font-weight: 600; border-radius: 10px;
+      transition: all .25s; color: var(--bark-light);
+    }
+    .auth-tab.on { background: var(--amber); color: #fff; }
+
+    .form-title { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 700; color: var(--bark); margin-bottom: 4px; }
+    .form-sub { color: var(--bark-light); font-size: 14px; margin-bottom: 28px; }
+
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; color: var(--bark); margin-bottom: 6px; }
+    .field input {
+      width: 100%; padding: 13px 16px; border: 1.5px solid var(--border);
+      border-radius: 12px; font-size: 14px; font-family: 'Outfit', sans-serif;
+      outline: none; background: var(--cream); color: var(--bark); transition: all .2s;
+    }
+    .field input:focus { border-color: var(--amber); background: #fff; box-shadow: 0 0 0 3px rgba(212,98,10,.08); }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .submit-btn {
+      width: 100%; background: var(--amber); color: #fff; border: none;
+      padding: 15px; border-radius: 14px; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      transition: all .25s; margin-top: 6px;
+    }
+    .submit-btn:hover { background: var(--bark); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+
+    .form-switch { text-align: center; margin-top: 16px; font-size: 14px; color: var(--bark-light); }
+    .form-switch a { color: var(--amber); cursor: pointer; font-weight: 600; }
+
+    .or-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 20px 0; color: var(--bark-light); font-size: 13px;
+    }
+    .or-divider::before, .or-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .google-btn {
+      width: 100%; background: #fff; color: var(--bark);
+      border: 1.5px solid var(--border); padding: 13px;
+      border-radius: 14px; font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: 'Outfit', sans-serif;
+      transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .google-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+    .logged-in-box {
+      background: var(--cream); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 32px; text-align: center;
+    }
+    .logged-in-box .av-big {
+      width: 72px; height: 72px; border-radius: 50%; background: var(--amber);
+      color: #fff; font-size: 28px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .logged-in-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--bark); margin-bottom: 4px; }
+    .logged-in-box p { color: var(--bark-light); font-size: 14px; margin-bottom: 24px; }
+    .logged-in-actions { display: flex; flex-direction: column; gap: 10px; }
+    .act-btn {
+      width: 100%; padding: 13px; border-radius: 12px; font-size: 14px;
+      font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif;
+      transition: all .2s; text-decoration: none; display: block; text-align: center;
+    }
+    .act-primary { background: var(--amber); color: #fff; border: none; }
+    .act-primary:hover { background: var(--bark); }
+    .act-sec { background: #fff; color: var(--bark); border: 1.5px solid var(--border); }
+    .act-sec:hover { border-color: var(--amber); color: var(--amber); }
+    .act-danger { background: #fff; color: #c0392b; border: 1.5px solid #f5c6c6; }
+    .act-danger:hover { background: #fdf0f0; }
+
+    @media(max-width:900px) {
+      .auth-page { grid-template-columns: 1fr; }
+      .auth-left { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div id="toast"></div>
+
+<div class="auth-page">
+  <!-- LEFT -->
+  <div class="auth-left">
+    <div class="al-logo">Bake<span>Bliss</span></div>
+    <div class="al-tagline">Premium Baking Supplies</div>
+    <h2>Join Our Baker Community</h2>
+    <p>Access exclusive deals, early launches, and expert baking tips from our team of passionate bakers.</p>
+    <div class="perks">
+      <div class="perk"><span class="pi">🚚</span><p>Free delivery on your very first order</p></div>
+      <div class="perk"><span class="pi">🎁</span><p>Welcome gift on registration</p></div>
+      <div class="perk"><span class="pi">⭐</span><p>Earn loyalty points on every purchase</p></div>
+      <div class="perk"><span class="pi">📋</span><p>Track and manage all your orders easily</p></div>
+      <div class="perk"><span class="pi">💬</span><p>Priority support from our baker team</p></div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="auth-right">
+    <div class="auth-wrap" id="authWrap">
+      <!-- dynamically filled -->
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script src="nav.js"></script>
+<script>
+function renderAuth() {
+  const sess = DB.session();
+  const wrap = document.getElementById('authWrap');
+
+  if (sess) {
+    wrap.innerHTML = `
+      <div class="logged-in-box">
+        <div class="av-big">${sess.first ? sess.first[0].toUpperCase() : '?'}</div>
+        <h3>Hello, ${sess.name}! 👋</h3>
+        <p>${sess.email}</p>
+        <div class="logged-in-actions">
+          <a class="act-btn act-primary" href="orders.html">📋 View My Orders</a>
+          <a class="act-btn act-sec" href="index.html">🏠 Go to Homepage</a>
+          <a class="act-btn act-sec" href="cart.html">🛒 View Cart</a>
+          <button class="act-btn act-danger" id="logoutBtn">🚪 Sign Out</button>
+        </div>
+      </div>`;
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      API.logout();
+      showToast('👋 Signed out. See you soon!');
+      setTimeout(renderAuth, 500);
+    });
+    return;
+  }
+
+  wrap.innerHTML = `
+    <div class="auth-tabs">
+      <button class="auth-tab on" id="tabLogin">Sign In</button>
+      <button class="auth-tab" id="tabReg">Register</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="loginForm">
+      <div class="form-title">Welcome Back 👋</div>
+      <div class="form-sub">Sign in to your BakeBliss account</div>
+      <div class="field"><label>Email Address</label><input type="email" id="loginEmail" placeholder="you@example.com"/></div>
+      <div class="field"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••"/></div>
+      <button class="submit-btn" id="loginBtn">Sign In →</button>
+      <div class="form-switch">No account? <a id="switchToReg">Create one free →</a></div>
+      <div class="or-divider">or</div>
+      <button class="google-btn" onclick="showToast('🔗 Google login coming soon!')">🌐 Continue with Google</button>
+      <div style="margin-top:14px;text-align:center;font-size:12px;color:var(--bark-light)">
+        Demo account: <strong>demo@bakebliss.com</strong> / <strong>demo123</strong>
+      </div>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="regForm" style="display:none">
+      <div class="form-title">Create Account 🎂</div>
+      <div class="form-sub">Start your BakeBliss journey today</div>
+      <div class="field-row">
+        <div class="field"><label>First Name</label><input type="text" id="regFirst" placeholder="First"/></div>
+        <div class="field"><label>Last Name</label><input type="text" id="regLast" placeholder="Last"/></div>
+      </div>
+      <div class="field"><label>Email Address</label><input type="email" id="regEmail" placeholder="you@example.com"/></div>
+      <div class="field"><label>Phone Number</label><input type="tel" id="regPhone" placeholder="+91 99999 99999"/></div>
+      <div class="field"><label>Password</label><input type="password" id="regPass" placeholder="Min. 6 characters"/></div>
+      <div class="field"><label>Confirm Password</label><input type="password" id="regConf" placeholder="Repeat password"/></div>
+      <button class="submit-btn" id="regBtn">Create Account →</button>
+      <div class="form-switch">Already have an account? <a id="switchToLogin">Sign in →</a></div>
+    </div>`;
+
+  // Tab switching
+  document.getElementById('tabLogin').addEventListener('click', () => {
+    document.getElementById('tabLogin').classList.add('on');
+    document.getElementById('tabReg').classList.remove('on');
+    document.getElementById('loginForm').style.display = '';
+    document.getElementById('regForm').style.display = 'none';
+  });
+  document.getElementById('tabReg').addEventListener('click', showRegForm);
+  document.getElementById('switchToReg').addEventListener('click', showRegForm);
+  document.getElementById('switchToLogin').addEventListener('click', () => {
+    document.getElementById('tabLogin').classList.add('on');
+    document.getElementById('tabReg').classList.remove('on');
+    document.getElementById('loginForm').style.display = '';
+    document.getElementById('regForm').style.display = 'none';
+  });
+
+  // Login
+  document.getElementById('loginBtn').addEventListener('click', () => {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass  = document.getElementById('loginPass').value;
+    if (!email || !pass) { showToast('⚠️ Please fill all fields.'); return; }
+    const res = API.login(email, pass);
+    if (res.ok) { showToast('👋 Welcome back, ' + res.user.first + '!'); setTimeout(renderAuth, 600); }
+    else showToast('❌ ' + res.msg);
+  });
+
+  // Register
+  document.getElementById('regBtn').addEventListener('click', () => {
+    const first = document.getElementById('regFirst').value.trim();
+    const last  = document.getElementById('regLast').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
+    const pass  = document.getElementById('regPass').value;
+    const conf  = document.getElementById('regConf').value;
+    if (!first||!last||!email||!pass) { showToast('⚠️ Please fill all required fields.'); return; }
+    if (pass.length < 6) { showToast('⚠️ Password must be at least 6 characters.'); return; }
+    if (pass !== conf)   { showToast('⚠️ Passwords do not match.'); return; }
+    const res = API.register(first, last, email, phone, pass);
+    if (res.ok) { showToast('🎉 Welcome to BakeBliss, ' + first + '!'); setTimeout(renderAuth, 600); }
+    else showToast('❌ ' + res.msg);
+  });
+}
+
+function showRegForm() {
+  document.getElementById('tabReg').classList.add('on');
+  document.getElementById('tabLogin').classList.remove('on');
+  document.getElementById('regForm').style.display = '';
+  document.getElementById('loginForm').style.display = 'none';
+}
+
+renderAuth();
+
+// Check if arriving from register link
+if (location.search.includes('register')) showRegForm();
+</script>
+</body>
+</html>

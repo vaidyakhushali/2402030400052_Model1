@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aryan Mehta – Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --ink-soft: #4a4a6a;
+    --ink-muted: #8888aa;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --accent-mid: #93c5fd;
+    --surface: #ffffff;
+    --surface-2: #f8f9ff;
+    --border: #e8e8f4;
+    --sidebar-bg: #1a1a2e;
+    --sidebar-text: #e8e8f8;
+    --sidebar-muted: #9090b8;
+    --sidebar-accent: #60a5fa;
+    --green: #10b981;
+    --tag-bg: #eff6ff;
+    --tag-border: #bfdbfe;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #e8eaf0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 32px 16px;
+    color: var(--ink);
+  }
+
+  .page {
+    width: 900px;
+    background: var(--surface);
+    display: grid;
+    grid-template-columns: 270px 1fr;
+    box-shadow: 0 20px 60px rgba(26,26,46,0.18), 0 4px 16px rgba(26,26,46,0.08);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    padding: 40px 26px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .avatar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -1px;
+    border: 3px solid rgba(255,255,255,0.15);
+  }
+
+  .name-block { text-align: center; }
+  .name-block .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .name-block .role {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sidebar-accent);
+    margin-top: 5px;
+  }
+
+  .s-section { display: flex; flex-direction: column; gap: 10px; }
+  .s-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--sidebar-accent);
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(96,165,250,0.25);
+    margin-bottom: 2px;
+  }
+
+  /* Contact items */
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--sidebar-text);
+    line-height: 1.4;
+  }
+  .contact-item .icon {
+    width: 26px;
+    height: 26px;
+    background: rgba(96,165,250,0.15);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--sidebar-accent);
+    font-size: 13px;
+  }
+
+  /* Skill tags sidebar */
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag {
+    font-size: 10.5px;
+    font-weight: 500;
+    background: rgba(96,165,250,0.12);
+    border: 1px solid rgba(96,165,250,0.25);
+    color: var(--sidebar-text);
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+
+  /* Languages */
+  .lang-item { margin-bottom: 8px; }
+  .lang-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: var(--sidebar-text);
+  }
+  .lang-row span:last-child { color: var(--sidebar-muted); font-size: 11px; }
+  .lang-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .lang-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sidebar-accent), #a5f3fc);
+    border-radius: 2px;
+  }
+
+  /* Hobbies */
+  .hobby-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .hobby-tag {
+    font-size: 11px;
+    background: rgba(255,255,255,0.07);
+    color: var(--sidebar-muted);
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Soft skills */
+  .soft-skill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--sidebar-text);
+  }
+  .soft-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--sidebar-accent);
+    flex-shrink: 0;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    padding: 40px 36px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    background: var(--surface);
+  }
+
+  /* Header strip */
+  .main-header {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 14px;
+  }
+  .main-header .full-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .main-header .tagline {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 5px;
+  }
+
+  /* Section headings */
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Objective */
+  .objective-text {
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--accent);
+    padding-left: 14px;
+    font-style: italic;
+  }
+
+  /* Education */
+  .edu-item { display: grid; grid-template-columns: 1fr auto; gap: 6px; }
+  .edu-item + .edu-item { margin-top: 14px; }
+  .edu-degree {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .edu-school {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .edu-badge {
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 20px;
+    height: fit-content;
+    white-space: nowrap;
+  }
+  .edu-meta {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 3px;
+    display: flex;
+    gap: 12px;
+  }
+  .edu-meta span::before { content: '📅 '; font-size: 10px; }
+  .edu-meta .gpa::before { content: '🎓 '; font-size: 10px; }
+
+  /* Tech skills */
+  .skills-grid { display: flex; flex-direction: column; gap: 9px; }
+  .skill-row { display: flex; align-items: center; gap: 10px; }
+  .skill-name { font-size: 12px; font-weight: 500; color: var(--ink); width: 90px; flex-shrink: 0; }
+  .skill-bar-wrap { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .skill-bar { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent) 0%, var(--accent-mid) 100%); }
+  .skill-pct { font-size: 11px; color: var(--ink-muted); width: 34px; text-align: right; }
+
+  /* Tech tag cloud */
+  .tag-cloud { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+  .tech-tag {
+    font-size: 11.5px;
+    font-weight: 500;
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    color: var(--accent);
+    padding: 4px 11px;
+    border-radius: 4px;
+  }
+
+  /* Projects */
+  .project-item {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 13px 16px;
+  }
+  .project-item + .project-item { margin-top: 10px; }
+  .project-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .project-name { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .project-tech {
+    font-size: 10px;
+    font-weight: 500;
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--ink-soft);
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+  .project-desc {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-top: 7px;
+  }
+  .project-link {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+    border: 1px solid var(--accent-mid);
+    padding: 3px 9px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .project-link:hover { background: var(--accent-light); }
+
+  /* Certifications */
+  .cert-list { display: flex; flex-direction: column; gap: 8px; }
+  .cert-item { display: flex; align-items: center; gap: 10px; }
+  .cert-icon {
+    width: 28px; height: 28px;
+    background: var(--accent-light);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .cert-body { flex: 1; }
+  .cert-name { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+  .cert-issuer { font-size: 11px; color: var(--ink-muted); }
+  .cert-year {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* Achievements */
+  .achieve-list { display: flex; flex-direction: column; gap: 8px; }
+  .achieve-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .achieve-bullet {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; border-radius: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ════ SIDEBAR ════ -->
+  <aside class="sidebar">
+
+    <div class="avatar-wrap">
+      <div class="avatar">AM</div>
+      <div class="name-block">
+        <div class="name">Aryan Mehta</div>
+        <div class="role">Computer Engineering</div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="s-section">
+      <div class="s-label">Contact</div>
+      <div class="contact-item">
+        <div class="icon">📧</div>
+        <span>aryan.mehta@email.com</span>
+      </div>
+      <div class="contact-item">
+        <div class="icon">📱</div>
+        <span>+91 98765 43210</span>
+      </div>
+      <div class="contact-item">
+        <div class="icon">🌐</div>
+        <span>linkedin.com/in/aryanmehta</span>
+      </div>
+      <div class="contact-item">
+        <div class="icon">💻</div>
+        <span>github.com/aryanmehta</span>
+      </div>
+      <div class="contact-item">
+        <div class="icon">📍</div>
+        <span>Ahmedabad, Gujarat, India</span>
+      </div>
+    </div>
+
+    <!-- Core Tech Stack -->
+    <div class="s-section">
+      <div class="s-label">Tech Stack</div>
+      <div class="skill-tags">
+        <span class="skill-tag">HTML5</span>
+        <span class="skill-tag">CSS3</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Bootstrap</span>
+        <span class="skill-tag">jQuery</span>
+        <span class="skill-tag">C / C++</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">SQL</span>
+      </div>
+    </div>
+
+    <!-- Soft Skills -->
+    <div class="s-section">
+      <div class="s-label">Soft Skills</div>
+      <div class="soft-skill"><div class="soft-dot"></div>Communication</div>
+      <div class="soft-skill"><div class="soft-dot"></div>Teamwork & Collaboration</div>
+      <div class="soft-skill"><div class="soft-dot"></div>Problem Solving</div>
+      <div class="soft-skill"><div class="soft-dot"></div>Creativity & Design Thinking</div>
+      <div class="soft-skill"><div class="soft-dot"></div>Time Management</div>
+    </div>
+
+    <!-- Languages -->
+    <div class="s-section">
+      <div class="s-label">Languages</div>
+      <div class="lang-item">
+        <div class="lang-row"><span>English</span><span>Fluent</span></div>
+        <div class="lang-bar"><div class="lang-fill" style="width:90%"></div></div>
+      </div>
+      <div class="lang-item">
+        <div class="lang-row"><span>Hindi</span><span>Native</span></div>
+        <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+      </div>
+      <div class="lang-item">
+        <div class="lang-row"><span>Gujarati</span><span>Native</span></div>
+        <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+      </div>
+    </div>
+
+    <!-- Hobbies -->
+    <div class="s-section">
+      <div class="s-label">Interests</div>
+      <div class="hobby-tags">
+        <span class="hobby-tag">🎨 UI Design</span>
+        <span class="hobby-tag">🌐 Web Dev</span>
+        <span class="hobby-tag">📚 Reading</span>
+        <span class="hobby-tag">🎮 Gaming</span>
+        <span class="hobby-tag">📸 Photography</span>
+        <span class="hobby-tag">✏️ Sketching</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ════ MAIN CONTENT ════ -->
+  <main class="main">
+
+    <!-- Header -->
+    <div class="main-header">
+      <div class="full-name">Aryan Mehta</div>
+      <div class="tagline">Computer Engineering Student &nbsp;·&nbsp; Web Developer &nbsp;·&nbsp; UI Enthusiast</div>
+    </div>
+
+    <!-- Career Objective -->
+    <section>
+      <div class="section-title">Career Objective</div>
+      <p class="objective-text">
+        Motivated 4th Semester Computer Engineering student with a strong foundation in front-end web technologies and object-oriented programming. Passionate about crafting responsive, user-centric web experiences that blend clean code with thoughtful design. Actively seeking an internship or entry-level role where I can contribute meaningfully, learn from industry professionals, and grow as a full-stack developer.
+      </p>
+    </section>
+
+    <!-- Education -->
+    <section>
+      <div class="section-title">Education</div>
+
+      <div class="edu-item">
+        <div>
+          <div class="edu-degree">B.E. in Computer Engineering</div>
+          <div class="edu-school">Gujarat Technological University (GTU)</div>
+          <div class="edu-meta">
+            <span>2023 – 2027 (Expected)</span>
+            <span class="gpa">CGPA: 8.4 / 10.0</span>
+          </div>
+        </div>
+        <div class="edu-badge">Pursuing</div>
+      </div>
+
+      <div class="edu-item" style="margin-top:14px">
+        <div>
+          <div class="edu-degree">Higher Secondary (Science – PCM + CS)</div>
+          <div class="edu-school">Kendriya Vidyalaya, Ahmedabad</div>
+          <div class="edu-meta">
+            <span>2021 – 2023</span>
+            <span class="gpa">Percentage: 87.4%</span>
+          </div>
+        </div>
+        <div class="edu-badge">Completed</div>
+      </div>
+    </section>
+
+    <!-- Technical Skills -->
+    <section>
+      <div class="section-title">Technical Skills</div>
+      <div class="skills-grid">
+        <div class="skill-row">
+          <span class="skill-name">HTML / CSS</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div>
+          <span class="skill-pct">92%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">JavaScript</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+          <span class="skill-pct">80%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Bootstrap</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+          <span class="skill-pct">85%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">C / C++</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+          <span class="skill-pct">75%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Java</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div>
+          <span class="skill-pct">70%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Python</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:68%"></div></div>
+          <span class="skill-pct">68%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">SQL</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:72%"></div></div>
+          <span class="skill-pct">72%</span>
+        </div>
+      </div>
+      <div class="tag-cloud">
+        <span class="tech-tag">Git & GitHub</span>
+        <span class="tech-tag">VS Code</span>
+        <span class="tech-tag">Figma (Basic)</span>
+        <span class="tech-tag">Responsive Design</span>
+        <span class="tech-tag">DOM Manipulation</span>
+        <span class="tech-tag">OOP Concepts</span>
+        <span class="tech-tag">DBMS Basics</span>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section>
+      <div class="section-title">Projects</div>
+
+      <div class="project-item">
+        <div class="project-top">
+          <div class="project-name">🛒 Bakery E-Commerce Website</div>
+          <a href="#" class="project-link">View Project ↗</a>
+        </div>
+        <div class="project-stack">
+          <span class="project-tech">HTML5</span>
+          <span class="project-tech">CSS3</span>
+          <span class="project-tech">JavaScript</span>
+          <span class="project-tech">Bootstrap 5</span>
+        </div>
+        <p class="project-desc">
+          A fully responsive online bakery storefront featuring product listings, a shopping cart with local storage, category filtering, and a checkout flow. Focused on mobile-first design and smooth UI transitions.
+        </p>
+      </div>
+
+      <div class="project-item">
+        <div class="project-top">
+          <div class="project-name">🍽️ Restaurant Website Design</div>
+          <a href="#" class="project-link">View Project ↗</a>
+        </div>
+        <div class="project-stack">
+          <span class="project-tech">HTML5</span>
+          <span class="project-tech">CSS3</span>
+          <span class="project-tech">Bootstrap</span>
+          <span class="project-tech">jQuery</span>
+        </div>
+        <p class="project-desc">
+          Multi-page restaurant website with hero section, animated menu cards, reservation form, and testimonials carousel. Optimized for cross-browser compatibility and tablet/mobile viewports.
+        </p>
+      </div>
+
+      <div class="project-item">
+        <div class="project-top">
+          <div class="project-name">📋 Student Registration Form with Validation</div>
+          <a href="#" class="project-link">View Project ↗</a>
+        </div>
+        <div class="project-stack">
+          <span class="project-tech">HTML5</span>
+          <span class="project-tech">CSS3</span>
+          <span class="project-tech">JavaScript</span>
+        </div>
+        <p class="project-desc">
+          Dynamic multi-step registration form with real-time client-side validation, regex-based field checks, error messaging, and a confirmation summary — demonstrating strong DOM manipulation skills.
+        </p>
+      </div>
+    </section>
+
+    <!-- Certifications + Achievements side by side -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+
+      <section>
+        <div class="section-title">Certifications</div>
+        <div class="cert-list">
+          <div class="cert-item">
+            <div class="cert-icon">🏅</div>
+            <div class="cert-body">
+              <div class="cert-name">Responsive Web Design</div>
+              <div class="cert-issuer">freeCodeCamp</div>
+            </div>
+            <div class="cert-year">2024</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-icon">🏅</div>
+            <div class="cert-body">
+              <div class="cert-name">JavaScript Algorithms</div>
+              <div class="cert-issuer">freeCodeCamp</div>
+            </div>
+            <div class="cert-year">2024</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-icon">🏅</div>
+            <div class="cert-body">
+              <div class="cert-name">Python for Beginners</div>
+              <div class="cert-issuer">Coursera – Michigan</div>
+            </div>
+            <div class="cert-year">2023</div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-icon">🏅</div>
+            <div class="cert-body">
+              <div class="cert-name">SQL & Databases</div>
+              <div class="cert-issuer">Great Learning</div>
+            </div>
+            <div class="cert-year">2024</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Achievements</div>
+        <div class="achieve-list">
+          <div class="achieve-item">
+            <div class="achieve-bullet"></div>
+            <span>🥇 1st Place — Inter-College Web Design Hackathon, GTU Tech Fest 2024</span>
+          </div>
+          <div class="achieve-item">
+            <div class="achieve-bullet"></div>
+            <span>🎖️ Best Project Award — Front-End Development, Semester III Mini Project</span>
+          </div>
+          <div class="achieve-item">
+            <div class="achieve-bullet"></div>
+            <span>📊 Scored 95/100 in Database Management Systems (Sem III)</span>
+          </div>
+          <div class="achieve-item">
+            <div class="achieve-bullet"></div>
+            <span>🌟 Active Member — Google Developer Student Club (GDSC), GTU Chapter</span>
+          </div>
+          <div class="achieve-item">
+            <div class="achieve-bullet"></div>
+            <span>✅ Solved 80+ problems on LeetCode focusing on arrays, strings & recursion</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
